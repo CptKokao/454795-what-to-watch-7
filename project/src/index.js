@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/app';
+import App from './components/App/App';
 
 // Название, жанр и дата выхода промо-фильма
 const film = {
@@ -86,10 +86,6 @@ const cards = [
   {
     title: 'Mindhunter',
     imgPath: 'img/mindhunter.jpg',
-  },
-  {
-    title: 'Midnight Special',
-    imgPath: 'img/midnight-special.jpg',
   },
 ];
 
