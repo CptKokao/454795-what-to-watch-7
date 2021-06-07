@@ -7,14 +7,12 @@ function App({film, cards}) {
 }
 
 App.propTypes = {
-  film: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  cards: PropTypes.objectOf(
+  film: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+  }).isRequired,
+  cards: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,

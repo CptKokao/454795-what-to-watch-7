@@ -142,7 +142,7 @@ function Main({ film, cards }) {
           {/* Список карточе с фильмами */}
           <div className="catalog__films-list">
             {cards.map((card) => (
-              <Card card={card} key={card.title}/>
+              <Card {...card} key={card.title}/>
             ))}
 
           </div>
@@ -171,14 +171,12 @@ function Main({ film, cards }) {
 }
 
 Main.propTypes = {
-  film: PropTypes.objectOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  cards: PropTypes.objectOf(
+  film: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+  }).isRequired,
+  cards: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired,
