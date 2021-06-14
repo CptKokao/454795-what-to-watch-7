@@ -10,14 +10,14 @@ import Review from '../Review/Review';
 import Player from '../Player/Player';
 import NotFound from '../NotFound/NotFound';
 
-function App({film, cards}) {
+function App({films}) {
 
   return (
     <BrowserRouter>
       <Switch>
         {/* / */}
         <Route path={AppRoute.MAIN} exact>
-          <Main film={film} cards={cards} />
+          <Main films={films} />
         </Route>
 
         {/* /login */}
@@ -27,7 +27,7 @@ function App({film, cards}) {
 
         {/* /mylist */}
         <Route path={AppRoute.MYLIST} exact>
-          <MyList />
+          <MyList films={films} />
         </Route>
 
         {/* /films/:id */}
@@ -56,18 +56,27 @@ function App({film, cards}) {
 }
 
 App.propTypes = {
-  film: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-  }).isRequired,
-  cards: PropTypes.arrayOf(
+  films: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+      runTime: PropTypes.number.isRequired,
       genre: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default App;
