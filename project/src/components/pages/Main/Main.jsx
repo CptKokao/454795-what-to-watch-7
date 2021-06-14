@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListCards from '../ListCards/ListCards';
+
+import ListCards from '../../common/ListCards/ListCards';
+import Header from '../../common/Header/Header';
+import Footer from '../../common/Footer/Footer';
 
 function Main({ promo, films }) {
 
@@ -13,26 +16,8 @@ function Main({ promo, films }) {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link" href="/#">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="/#">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        {/* Haeder */}
+        <Header />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -113,19 +98,8 @@ function Main({ promo, films }) {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light" href="/#">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   );
@@ -158,7 +132,7 @@ Main.propTypes = {
     posterImage: PropTypes.string.isRequired,
     backgroundImage: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    released: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
   }).isRequired,
 };
 

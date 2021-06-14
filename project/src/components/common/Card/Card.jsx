@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function Card({name, previewImage, id, active, setActive}) {
+
 
   function changeActive() {
     setActive(id);
@@ -9,12 +11,15 @@ function Card({name, previewImage, id, active, setActive}) {
   }
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseOver={() => changeActive(id)} >
+    <article
+      className="small-film-card catalog__films-card"
+      onMouseOver={() => changeActive(id)}
+    >
       <div className="small-film-card__image">
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
       </h3>
     </article>
   );

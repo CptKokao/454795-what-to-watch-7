@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {AppRoute} from '../../const';
-import Main from '../Main/Main';
-import SignIn from '../SignIn/SignIn';
-import MyList from '../MyList/MyList';
-import Film from '../Film/Film';
-import Review from '../Review/Review';
-import Player from '../Player/Player';
-import NotFound from '../NotFound/NotFound';
+import Main from '../pages/Main/Main';
+import SignIn from '../pages/SignIn/SignIn';
+import MyList from '../pages/MyList/MyList';
+import Film from '../pages/Film/Film';
+import Details from '../pages/Details/Details';
+import Review from '../pages/Review/Review';
+import Player from '../pages/Player/Player';
+import NotFound from '../pages/NotFound/NotFound';
 
 function App({films, promo}) {
 
@@ -30,15 +31,33 @@ function App({films, promo}) {
           <MyList films={films} />
         </Route>
 
-        {/* /films/:id */}
-        <Route path={AppRoute.FILMS} exact>
-          <Film films={films} />
-        </Route>
-
         {/* /films/:id/review */}
-        <Route path={AppRoute.REVIEW} exact>
-          <Review films={films} promo={promo} />
-        </Route>
+        <Route
+          path={AppRoute.REVIEW}
+          exact
+          render={({ match }) => (
+            <Review films={films} id={match.params.id}/>
+          )}
+        />
+
+        {/* /films/:id */}
+        <Route
+          path={AppRoute.FILMS}
+          exact
+          render={({ match }) => (
+            <Film films={films} id={match.params.id}/>
+          )}
+        />
+
+        {/* /films/:id/details */}
+        <Route
+          path={AppRoute.DETAILS}
+          exact
+          render={({ match }) => (
+            <Details films={films} id={match.params.id}/>
+          )}
+        />
+
 
         {/* /player/:id */}
         <Route path={AppRoute.PLAYER} exact>
@@ -77,7 +96,7 @@ App.propTypes = {
       previewVideoLink: PropTypes.string.isRequired,
     }),
   ),
-  promo: {
+  promo: PropTypes.shape({
     name: PropTypes.string.isRequired,
     posterImage: PropTypes.string.isRequired,
     previewImage: PropTypes.string.isRequired,
@@ -95,7 +114,7 @@ App.propTypes = {
     isFavorite: PropTypes.bool.isRequired,
     videoLink: PropTypes.string.isRequired,
     previewVideoLink: PropTypes.string.isRequired,
-  },
+  }),
 };
 
 export default App;
