@@ -8,6 +8,7 @@ import MyList from '../pages/MyList/MyList';
 import Film from '../pages/Film/Film';
 import Details from '../pages/Details/Details';
 import Review from '../pages/Review/Review';
+import AddReview from '../pages/AddReview/AddReview';
 import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
 
@@ -58,6 +59,14 @@ function App({films, promo}) {
           )}
         />
 
+        {/* /films/:id/add-review */}
+        <Route
+          path={AppRoute.ADDREVIEW}
+          exact
+          render={({ match }) => (
+            <AddReview films={films} id={match.params.id}/>
+          )}
+        />
 
         {/* /player/:id */}
         <Route path={AppRoute.PLAYER} exact>

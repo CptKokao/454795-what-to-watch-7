@@ -44,7 +44,7 @@ function Film({ films, id }) {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={`/films/${id}/add-review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
