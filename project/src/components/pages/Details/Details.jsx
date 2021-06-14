@@ -58,7 +58,7 @@ function Details({ films, id }) {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item">
-                    <Link Link to={`/films/${id}`} className="film-nav__link">Overview</Link>
+                    <Link to={`/films/${id}`} className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item film-nav__item--active">
                     <span className="film-nav__link">Details</span>

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 function Card({name, previewImage, id, active, setActive}) {
 
-
   function changeActive() {
     setActive(id);
     // console.log(active)
