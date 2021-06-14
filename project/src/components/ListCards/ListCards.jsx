@@ -4,9 +4,11 @@ import Card from '../Card/Card';
 
 function ListCards({ films }) {
 
+  const [active, setActive] = React.useState(null);
+
   return (
     films.map((card) => (
-      <Card {...card} key={card.title}/>
+      <Card {...card} active={active} setActive={setActive} key={card.title}/>
     ))
   );
 }
