@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Player() {
+function Player({ films }) {
 
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={films[0].videoLink} className="player__video" poster={films[0].previewImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -24,7 +25,7 @@ function Player() {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{films[0].name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -37,5 +38,16 @@ function Player() {
     </div>
   );
 }
+
+Player.propTypes = {
+  films: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default Player;

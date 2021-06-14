@@ -1,13 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Review() {
+import ListCards from '../ListCards/ListCards';
+
+function Review({ films, promo }) {
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={promo.backgroundImage} alt={promo.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -35,10 +38,10 @@ function Review() {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -63,7 +66,7 @@ function Review() {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={promo.posterImage} alt={promo.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -172,42 +175,9 @@ function Review() {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
+          {/* Список карточе с фильмами, первые 4 карточки */}
           <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
+            <ListCards films={films.slice(0,4)} />
           </div>
         </section>
 
@@ -228,5 +198,36 @@ function Review() {
     </>
   );
 }
+
+Review.propTypes = {
+  films: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      posterImage: PropTypes.string.isRequired,
+      previewImage: PropTypes.string.isRequired,
+      backgroundImage: PropTypes.string.isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      scoresCount: PropTypes.number.isRequired,
+      director: PropTypes.string.isRequired,
+      starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+      runTime: PropTypes.number.isRequired,
+      genre: PropTypes.string.isRequired,
+      released: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      videoLink: PropTypes.string.isRequired,
+      previewVideoLink: PropTypes.string.isRequired,
+    }).isRequired,
+  ),
+  promo:PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    released: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default Review;

@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ListCards from '../ListCards/ListCards';
 
-function Main({ films }) {
+function Main({ promo, films }) {
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={films[0].backgroundImage} alt={films[0].name} />
+          <img src={promo.backgroundImage} alt={promo.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -37,14 +37,14 @@ function Main({ films }) {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={films[0].posterImage} alt={films[0].name} width="218" height="327" />
+              <img src={promo.posterImage} alt={promo.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{films[0].name}</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{films[0].genre}</span>
-                <span className="film-card__year">{films[0].released}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -106,7 +106,6 @@ function Main({ films }) {
           {/* Список карточе с фильмами */}
           <div className="catalog__films-list">
             <ListCards films={films} />
-
           </div>
 
           <div className="catalog__more">
@@ -152,8 +151,15 @@ Main.propTypes = {
       isFavorite: PropTypes.bool.isRequired,
       videoLink: PropTypes.string.isRequired,
       previewVideoLink: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
   ),
+  promo:PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    released: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Main;
