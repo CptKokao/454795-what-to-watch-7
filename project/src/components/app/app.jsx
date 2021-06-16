@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {AppRoute} from '../../const';
 import Main from '../pages/Main/Main';
@@ -11,9 +10,10 @@ import Review from '../pages/Review/Review';
 import AddReview from '../pages/AddReview/AddReview';
 import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
+import filmsProp from './films.prop';
+import promoProp from './promo.prop';
 
 function App({films, promo}) {
-
   return (
     <BrowserRouter>
       <Switch>
@@ -69,9 +69,13 @@ function App({films, promo}) {
         />
 
         {/* /player/:id */}
-        <Route path={AppRoute.PLAYER} exact>
-          <Player films={films} />
-        </Route>
+        <Route
+          path={AppRoute.PLAYER}
+          exact
+          render={({ match }) => (
+            <Player films={films} id={match.params.id}/>
+          )}
+        />
 
         {/* 404 */}
         <Route>
@@ -84,46 +88,8 @@ function App({films, promo}) {
 }
 
 App.propTypes = {
-  films: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      posterImage: PropTypes.string.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      backgroundColor: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      scoresCount: PropTypes.number.isRequired,
-      director: PropTypes.string.isRequired,
-      starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-      runTime: PropTypes.number.isRequired,
-      genre: PropTypes.string.isRequired,
-      released: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
-      videoLink: PropTypes.string.isRequired,
-      previewVideoLink: PropTypes.string.isRequired,
-    }),
-  ),
-  promo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-    runTime: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    videoLink: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
-  }),
+  films: filmsProp,
+  promo: promoProp,
 };
 
 export default App;

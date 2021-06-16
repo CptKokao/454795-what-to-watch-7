@@ -1,37 +1,29 @@
 import React from 'react';
 
 function FormReview() {
-  const [review, setReview] = React.useState({
-    rating: 1,
-    text: '',
-  });
+  const [rating, setRating] = React.useState(1);
+  const [review, setReview] = React.useState('');
 
   function handleChangeRating(e) {
     e.preventDefault();
     const { value } = e.target;
-    setReview({
-      ...review,
-      rating: +value,
-    });
-
+    setRating(+value);
   }
 
   function handleChangeText(e) {
     e.preventDefault();
     const { value } = e.target;
-    setReview({
-      ...review,
-      text: value,
-    });
+    setReview(value);
   }
+
 
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars" >
-            {[...Array(10)].map((item, i) => {
-              const index = [...Array(10)].length - i;
+            {[...Array(10)].map((item, i, array) => {
+              const index = array.length - i;
               return (
                 <React.Fragment key={index}>
                   <input
@@ -41,9 +33,9 @@ function FormReview() {
                     name="rating"
                     value={index}
                     onChange={handleChangeRating}
-                    defaultChecked={index === review.rating}
+                    defaultChecked={index === rating}
                   />
-                  <label className="rating__label" htmlFor={`star-${index}`}>{`Rating ${index} ${review.rating}`}</label>
+                  <label className="rating__label" htmlFor={`star-${index}`}>{`Rating ${index} ${rating}`}</label>
                 </React.Fragment>
               );
             })}
@@ -62,6 +54,12 @@ function FormReview() {
           </div>
         </div>
       </form>
+
+      {/*
+        * Времено, чтобы eslint не ругался.
+        * Далее, эту переменную будем использовать в объекте, для отправки на сервер.
+      */}
+      {review}
     </div>
   );
 }

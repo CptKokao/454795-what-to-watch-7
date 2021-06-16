@@ -7,9 +7,11 @@ function ListCards({ films }) {
   const [active, setActive] = React.useState(1);
 
   return (
-    films.map((card) => (
-      <Card {...card} active={active} setActive={setActive} key={card.name}/>
-    ))
+    <div className="catalog__films-list">
+      {films.map((card) => (
+        <Card {...card} active={active} setActive={setActive} key={card.name}/>
+      ))}
+    </div>
   );
 }
 
