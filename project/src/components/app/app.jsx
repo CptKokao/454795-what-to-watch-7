@@ -1,23 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {AppRoute} from '../../const';
-import Main from '../Main/Main';
-import SignIn from '../SignIn/SignIn';
-import MyList from '../MyList/MyList';
-import Film from '../Film/Film';
-import Review from '../Review/Review';
-import Player from '../Player/Player';
-import NotFound from '../NotFound/NotFound';
+import Main from '../pages/Main/Main';
+import SignIn from '../pages/SignIn/SignIn';
+import MyList from '../pages/MyList/MyList';
+import Film from '../pages/Film/Film';
+import Details from '../pages/Details/Details';
+import Review from '../pages/Review/Review';
+import AddReview from '../pages/AddReview/AddReview';
+import Player from '../pages/Player/Player';
+import NotFound from '../pages/NotFound/NotFound';
+import filmsProp from './films.prop';
+import promoProp from './promo.prop';
 
-function App({film, cards}) {
-
+function App({films, promo}) {
   return (
     <BrowserRouter>
       <Switch>
         {/* / */}
         <Route path={AppRoute.MAIN} exact>
-          <Main film={film} cards={cards} />
+          <Main films={films} promo={promo} />
         </Route>
 
         {/* /login */}
@@ -27,23 +29,53 @@ function App({film, cards}) {
 
         {/* /mylist */}
         <Route path={AppRoute.MYLIST} exact>
-          <MyList />
-        </Route>
-
-        {/* /films/:id */}
-        <Route path={AppRoute.FILMS} exact>
-          <Film />
+          <MyList films={films} />
         </Route>
 
         {/* /films/:id/review */}
-        <Route path={AppRoute.REVIEW} exact>
-          <Review />
-        </Route>
+        <Route
+          path={AppRoute.REVIEW}
+          exact
+          render={({ match }) => (
+            <Review films={films} id={match.params.id}/>
+          )}
+        />
+
+        {/* /films/:id */}
+        <Route
+          path={AppRoute.FILMS}
+          exact
+          render={({ match }) => (
+            <Film films={films} id={match.params.id}/>
+          )}
+        />
+
+        {/* /films/:id/details */}
+        <Route
+          path={AppRoute.DETAILS}
+          exact
+          render={({ match }) => (
+            <Details films={films} id={match.params.id}/>
+          )}
+        />
+
+        {/* /films/:id/add-review */}
+        <Route
+          path={AppRoute.ADDREVIEW}
+          exact
+          render={({ match }) => (
+            <AddReview films={films} id={match.params.id}/>
+          )}
+        />
 
         {/* /player/:id */}
-        <Route path={AppRoute.PLAYER} exact>
-          <Player />
-        </Route>
+        <Route
+          path={AppRoute.PLAYER}
+          exact
+          render={({ match }) => (
+            <Player films={films} id={match.params.id}/>
+          )}
+        />
 
         {/* 404 */}
         <Route>
@@ -56,18 +88,8 @@ function App({film, cards}) {
 }
 
 App.propTypes = {
-  film: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-  }).isRequired,
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  films: filmsProp,
+  promo: promoProp,
 };
 
 export default App;

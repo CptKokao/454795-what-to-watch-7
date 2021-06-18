@@ -1,10 +1,14 @@
 import React from 'react';
 
-function Player() {
+import PropTypes from 'prop-types';
+import filmsProp from '../../App/films.prop';
+
+function Player({ films, id }) {
+  const film = films[id - 1] ;
 
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.backgroundImage} />
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -24,7 +28,7 @@ function Player() {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -37,5 +41,10 @@ function Player() {
     </div>
   );
 }
+
+Player.propTypes = {
+  films: filmsProp,
+  id: PropTypes.string.isRequired,
+};
 
 export default Player;
