@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ListCards from '../../common/ListCards/ListCards';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
-import filmsProp from '../../App/films.prop';
+import filmProp from '../../App/film.prop';
 import promoProp from '../../App/promo.prop';
 
 function Main({ promo, films }) {
@@ -103,7 +104,9 @@ function Main({ promo, films }) {
 }
 
 Main.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
   promo: promoProp,
 };
 

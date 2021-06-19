@@ -1,7 +1,7 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-import filmsProp from '../../App/films.prop';
+
+import filmProp from '../../App/film.prop';
 
 function Player({ films, id }) {
   const film = films[id - 1] ;
@@ -43,7 +43,9 @@ function Player({ films, id }) {
 }
 
 Player.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
   id: PropTypes.string.isRequired,
 };
 

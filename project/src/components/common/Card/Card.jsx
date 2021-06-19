@@ -3,23 +3,20 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function Card({name, id, previewVideoLink, posterImage}) {
+  // Необходим очищение setTimeout
   const [delayHandler, setDelayHandler] =  React.useState(null);
 
   const player = React.useRef(null);
-  console.log(id)
   function handleMouseEnter () {
     setDelayHandler(setTimeout(() => {
       player.current.muted = true;
       player.current.play();
-      console.log('mouseenter');
     }, 1000));
   }
 
   function handleMouseLeave () {
     player.current.load();
-    // Удаляет setTimeout
     clearTimeout(delayHandler);
-    console.log('mouseout');
   }
 
 
@@ -33,7 +30,7 @@ function Card({name, id, previewVideoLink, posterImage}) {
         <video src={previewVideoLink} className="player__video" poster={posterImage} ref={player} />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
+        <Link className="small-film-card__link" onClick={() => handleMouseLeave()} to={`/films/${id}`}>{name}</Link>
       </h3>
     </article>
   );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';
-import filmsProp from '../../App/films.prop';
+import filmProp from '../../App/film.prop';
 
 function AddReview({ films, id }) {
   const film = films[id] ;
@@ -60,7 +60,9 @@ function AddReview({ films, id }) {
 }
 
 AddReview.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
   id: PropTypes.string.isRequired,
 };
 

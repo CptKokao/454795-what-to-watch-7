@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import ListCards from '../../common/ListCards/ListCards';
+import Tabs from '../../common/Tabs/Tabs';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
-import filmsProp from '../../App/films.prop';
+import filmProp from '../../App/film.prop';
 
 function Film({ films, id }) {
 
@@ -56,43 +57,7 @@ function Film({ films, id }) {
               <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <span className="film-nav__link">Overview</span>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to={`/films/${id}/details`} className="film-nav__link">Details</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to={`/films/${id}/review`} className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{film.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.</p>
-
-                <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring">
-                  <strong>Starring:&nbsp;
-                    {film.starring.join(', ')}
-                  </strong>
-                </p>
-              </div>
-            </div>
+            <Tabs film={film} />
           </div>
         </div>
       </section>
@@ -112,7 +77,9 @@ function Film({ films, id }) {
 }
 
 Film.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
   id: PropTypes.string.isRequired,
 };
 
