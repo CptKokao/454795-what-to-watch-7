@@ -9,7 +9,7 @@ import filmsProp from '../../App/films.prop';
 
 function Film({ films, id }) {
 
-  const film = films[id - 1] ;
+  const film = films[id] ;
 
   return (
     <>

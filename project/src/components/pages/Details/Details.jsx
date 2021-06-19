@@ -9,7 +9,7 @@ import filmsProp from '../../App/films.prop';
 
 function Details({ films, id }) {
 
-  const film = films[id - 1] ;
+  const film = films[id] ;
   return (
     <>
       <section className="film-card film-card--full">
