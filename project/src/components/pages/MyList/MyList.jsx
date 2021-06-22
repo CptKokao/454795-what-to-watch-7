@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ListCards from '../../common/ListCards/ListCards';
-import filmsProp from '../../App/films.prop';
+import filmProp from '../../App/film.prop';
 
 function MyList({ films }) {
 
@@ -58,7 +59,9 @@ function MyList({ films }) {
 }
 
 MyList.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
 };
 
 export default MyList;

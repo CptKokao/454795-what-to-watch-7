@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {AppRoute} from '../../const';
 import Main from '../pages/Main/Main';
 import SignIn from '../pages/SignIn/SignIn';
 import MyList from '../pages/MyList/MyList';
 import Film from '../pages/Film/Film';
-import Details from '../pages/Details/Details';
-import Review from '../pages/Review/Review';
 import AddReview from '../pages/AddReview/AddReview';
 import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
-import filmsProp from './films.prop';
+
+import filmProp from './film.prop';
 import promoProp from './promo.prop';
 
 function App({films, promo}) {
@@ -32,30 +33,12 @@ function App({films, promo}) {
           <MyList films={films} />
         </Route>
 
-        {/* /films/:id/review */}
-        <Route
-          path={AppRoute.REVIEW}
-          exact
-          render={({ match }) => (
-            <Review films={films} id={match.params.id}/>
-          )}
-        />
-
         {/* /films/:id */}
         <Route
           path={AppRoute.FILMS}
           exact
           render={({ match }) => (
             <Film films={films} id={match.params.id}/>
-          )}
-        />
-
-        {/* /films/:id/details */}
-        <Route
-          path={AppRoute.DETAILS}
-          exact
-          render={({ match }) => (
-            <Details films={films} id={match.params.id}/>
           )}
         />
 
@@ -88,7 +71,9 @@ function App({films, promo}) {
 }
 
 App.propTypes = {
-  films: filmsProp,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
   promo: promoProp,
 };
 
