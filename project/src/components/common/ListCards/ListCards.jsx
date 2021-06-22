@@ -6,8 +6,6 @@ import filmProp from '../../App/film.prop';
 
 function ListCards({ films }) {
 
-  // const [active, setActive] = React.useState(1);
-
   return (
     <div className="catalog__films-list">
       {films.map((card, index) => (

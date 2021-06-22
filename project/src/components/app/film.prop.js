@@ -18,4 +18,4 @@ export default PropTypes.shape({
   isFavorite: PropTypes.bool.isRequired,
   videoLink: PropTypes.string.isRequired,
   previewVideoLink: PropTypes.string.isRequired,
-}).isRequired;
+});

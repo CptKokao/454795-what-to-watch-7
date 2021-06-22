@@ -9,7 +9,6 @@ function Tabs({ film }) {
   const openTab = (e) => setActive(+e.target.dataset.index);
 
   const items = ['Overview', 'Details', 'Reviews'];
-
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
@@ -26,7 +25,6 @@ function Tabs({ film }) {
           ))}
         </ul>
       </nav>
-
       {active === 0 && <Overview {...film} />}
       {active === 1 && <Details {...film} />}
       {active === 2 && <Reviews {...film} />}
