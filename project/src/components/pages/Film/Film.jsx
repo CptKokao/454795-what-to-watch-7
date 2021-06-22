@@ -10,7 +10,26 @@ import filmProp from '../../App/film.prop';
 
 function Film({ films, id }) {
 
-  const film = films[id] ;
+  const film = films[id];
+
+  // Ищет похожие фильмы
+  const getSimilarFilms = React.useCallback(() => {
+    const similarFilms = films.filter((item) => {
+
+      // Если эта не текущая картчока, добавить в массив, иначе не добовлять
+      if (item.name !== film.name) {
+        return item.genre === film.genre;
+      }
+      return false;
+    });
+
+    // Если карточек больше 4, отобразить первые 4 карточек
+    if (similarFilms.lenght > 4) {
+      return similarFilms.slice(0,4);
+    }
+
+    return similarFilms;
+  }, [film.genre, film.name, films]);
 
   return (
     <>
@@ -66,8 +85,8 @@ function Film({ films, id }) {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          {/* Список карточе с фильмами, первые 4 карточки */}
-          <ListCards films={films.slice(0,4)} />
+          {/* Список похожих карточек с фильмами, не больше 4 */}
+          <ListCards films={getSimilarFilms()} />
         </section>
 
         <Footer />
