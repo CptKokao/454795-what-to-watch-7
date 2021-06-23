@@ -25,6 +25,7 @@ function Tabs({ film }) {
           ))}
         </ul>
       </nav>
+
       {active === 0 && <Overview {...film} />}
       {active === 1 && <Details {...film} />}
       {active === 2 && <Reviews {...film} />}

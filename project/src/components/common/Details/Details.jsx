@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 function Details({ director, starring, genre, runTime, released}) {
 
-  function getTimeFromMins() {
+  const timeString = React.useMemo(() => {
     const hours = Math.trunc(runTime/60);
     const minutes = runTime % 60;
+
     return `${hours}h ${minutes}m`;
-  }
+  }, [runTime]);
+
 
   return (
     <div className="film-card__text film-card__row">
@@ -27,7 +29,7 @@ function Details({ director, starring, genre, runTime, released}) {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{getTimeFromMins()}</span>
+          <span className="film-card__details-value">{timeString}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
