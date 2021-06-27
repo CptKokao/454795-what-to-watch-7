@@ -3,7 +3,7 @@ import films from '../../src/mocks/films';
 
 const initialState = {
   genres: 'All genres',
-s
+  films: films,
 };
 
 const reducer = (state = initialState, action) => {

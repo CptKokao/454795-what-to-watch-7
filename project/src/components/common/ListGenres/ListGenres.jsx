@@ -8,26 +8,18 @@ import ListCards from '../../common/ListCards/ListCards';
 import filmProp from '../../App/film.prop';
 
 function ListGenres({genres, films, getChangedGenres}) {
-  // Список жанров
-  const listGenres = [
-    'All genres',
-    'Crime',
-    'Documentary',
-    'Dramas',
-    'Horror',
-    'Kids & Family',
-    'Romance',
-    'Sci-Fi',
-    'Thrillers',
-  ];
+  // Список уникальных жанров
+  const listGenres= [...new Set(films.map((item) => item.genre))];
+  // Добавляет в начало массива All genres
+  listGenres.unshift('All genres');
 
-  function getGenreFilms() {
+  // Возвращает список фильмов для выбранного жанра
+  const getGenreFilms = React.useCallback(() => {
     if (genres !== 'All genres') {
       return films.filter((item) => item.genre === genres);
     }
     return films;
-  }
-
+  }, [films, genres]);
 
   return (
     <ul className="catalog__genres-list" onClick={getChangedGenres}>
