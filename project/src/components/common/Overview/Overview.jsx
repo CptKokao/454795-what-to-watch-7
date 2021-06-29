@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Overview({ rating, description, scoresCount, director, starring}) {
 
-  function getLevel() {
+  const getLevel = React.useCallback(() => {
     if (Math.trunc(rating) === 10) {
       return 'Awesome';
     }
@@ -17,7 +17,7 @@ function Overview({ rating, description, scoresCount, director, starring}) {
       return 'Normal';
     }
     return 'Bad';
-  }
+  }, [rating]);
 
   return (
     <>
