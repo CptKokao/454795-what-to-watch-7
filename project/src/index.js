@@ -6,8 +6,6 @@ import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import App from './components/App/App';
-import films from '../src/mocks/films';
-import promo from '../src/mocks/promo';
 
 const store = createStore(
   reducer,
@@ -17,7 +15,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store} >
-      <App films={films} promo={promo} />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

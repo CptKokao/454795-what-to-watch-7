@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {AppRoute} from '../../const';
@@ -70,6 +71,11 @@ function App({films, promo}) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  films: state.films,
+  promo: state.promo,
+});
+
 App.propTypes = {
   films: PropTypes.arrayOf(
     filmProp,
@@ -77,4 +83,5 @@ App.propTypes = {
   promo: promoProp,
 };
 
-export default App;
+export {App};
+export default connect(mapStateToProps)(App);

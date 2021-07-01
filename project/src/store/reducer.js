@@ -1,9 +1,12 @@
 import {ActionType} from './actions';
 import films from '../../src/mocks/films';
+import promo from '../../src/mocks/promo';
 
 const initialState = {
   genres: 'All genres',
-  films: films,
+  limit: 8,
+  films,
+  promo,
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +16,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genres: action.payload,
+        limit: 8,
+      };
+
+    case ActionType.CHANGE_LIMIT:
+      return {
+        ...state,
+        limit: state.limit + 8,
       };
 
     default:

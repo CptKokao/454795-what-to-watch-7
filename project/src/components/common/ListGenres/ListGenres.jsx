@@ -5,34 +5,41 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../../store/actions';
 
 import ListCards from '../../common/ListCards/ListCards';
+import LoadMore from '../../common/LoadMore/LoadMore';
 import filmProp from '../../App/film.prop';
 
-function ListGenres({genres, films, getChangedGenres}) {
+function ListGenres({genres, limit, films, getChangedGenres}) {
+
   // Список уникальных жанров
   const listGenres= [...new Set(films.map((item) => item.genre))];
   // Добавляет в начало массива All genres
   listGenres.unshift('All genres');
 
-  // Возвращает список фильмов для выбранного жанра
-  const getGenreFilms = React.useCallback(() => {
-    if (genres !== 'All genres') {
-      return films.filter((item) => item.genre === genres);
-    }
-    return films;
-  }, [films, genres]);
+  // Список фильмов для выбранного жанра
+  const filmsByGenre = genres !== 'All genres' ? films.filter((item) => item.genre === genres) : films;
 
   return (
-    <ul className="catalog__genres-list" onClick={getChangedGenres}>
-      {listGenres.map((item) => (
-        <li
-          className={genres === item ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
-          key={item}
-        >
-          <a href="/#" className="catalog__genres-link">{item}</a>
-        </li>
-      ))}
-      <ListCards films={getGenreFilms()} />
-    </ul>
+    <>
+      <ul className="catalog__genres-list" onClick={getChangedGenres}>
+        {listGenres.map((item) => (
+          <li
+            className={genres === item ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
+            key={item}
+          >
+            <a href="/#" className="catalog__genres-link">{item}</a>
+          </li>
+        ))}
+
+        <div className="catalog__films-list">
+          <ListCards films={filmsByGenre.slice(0, limit)} />
+        </div>
+      </ul>
+
+      {/* Если длина массива с фильмами больше или равно лимиту, то еще есть не показанные фильмы в массиве */}
+      {limit <= filmsByGenre.length && (
+        <LoadMore />
+      )}
+    </>
   );
 }
 
@@ -46,11 +53,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   genres: state.genres,
-  films: state.films,
+  limit: state.limit,
 });
 
 ListGenres.propTypes = {
   genres: PropTypes.string.isRequired,
+  limit: PropTypes.number.isRequired,
   films: PropTypes.arrayOf(
     filmProp,
   ),

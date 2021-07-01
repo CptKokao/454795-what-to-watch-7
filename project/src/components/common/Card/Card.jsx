@@ -25,6 +25,7 @@ function Card({name, id, previewVideoLink, posterImage}) {
       className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-id={id}
     >
       <div className="small-film-card__image">
         <video src={previewVideoLink} className="player__video" poster={posterImage} ref={player} />
