@@ -43,6 +43,15 @@ function ListGenres({genres, limit, films, getChangedGenres}) {
   );
 }
 
+ListGenres.propTypes = {
+  genres: PropTypes.string.isRequired,
+  limit: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(
+    filmProp,
+  ),
+  getChangedGenres: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   getChangedGenres(e) {
     if (e.target.className === 'catalog__genres-link') {
@@ -55,15 +64,6 @@ const mapStateToProps = (state) => ({
   genres: state.genres,
   limit: state.limit,
 });
-
-ListGenres.propTypes = {
-  genres: PropTypes.string.isRequired,
-  limit: PropTypes.number.isRequired,
-  films: PropTypes.arrayOf(
-    filmProp,
-  ),
-  getChangedGenres: PropTypes.func.isRequired,
-};
 
 export {ListGenres};
 export default connect(mapStateToProps, mapDispatchToProps)(ListGenres);

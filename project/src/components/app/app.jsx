@@ -71,17 +71,17 @@ function App({films, promo}) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  films: state.films,
-  promo: state.promo,
-});
-
 App.propTypes = {
   films: PropTypes.arrayOf(
     filmProp,
   ),
   promo: promoProp,
 };
+
+const mapStateToProps = (state) => ({
+  films: state.films,
+  promo: state.promo,
+});
 
 export {App};
 export default connect(mapStateToProps)(App);

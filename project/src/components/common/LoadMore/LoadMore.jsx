@@ -11,15 +11,15 @@ function LoadMore({changeLimitFilms}) {
   );
 }
 
+LoadMore.propTypes = {
+  changeLimitFilms: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   changeLimitFilms() {
     dispatch(ActionCreator.changeLimit());
   },
 });
-
-LoadMore.propTypes = {
-  changeLimitFilms: PropTypes.func.isRequired,
-};
 
 export {LoadMore};
 export default connect(null, mapDispatchToProps)(LoadMore);
