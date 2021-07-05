@@ -1,6 +1,7 @@
 export const ActionType = {
   CHANGE_GENRES: 'ListGenres/changeGenres',
   CHANGE_LIMIT: 'ListGenres/changeLimit',
+  LOAD_FILMS: 'data/loadFilms',
 };
 
 export const ActionCreator = {
@@ -10,5 +11,9 @@ export const ActionCreator = {
   }),
   changeLimit: () => ({
     type: ActionType.CHANGE_LIMIT,
+  }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films,
   }),
 };

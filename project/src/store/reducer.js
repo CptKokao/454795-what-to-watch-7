@@ -25,6 +25,12 @@ const reducer = (state = initialState, action) => {
         limit: state.limit + 8,
       };
 
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        films: action.payload,
+      };
+
     default:
       return state;
   }
