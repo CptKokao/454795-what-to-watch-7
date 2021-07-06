@@ -1,12 +1,12 @@
-import {ActionType} from './actions';
-import films from '../../src/mocks/films';
-import promo from '../../src/mocks/promo';
+import { ActionType } from './actions';
+import { adapterToClient } from '../store/adapter';
 
 const initialState = {
   genres: 'All genres',
   limit: 8,
-  films,
-  promo,
+  films: [],
+  promo: {},
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,10 +25,17 @@ const reducer = (state = initialState, action) => {
         limit: state.limit + 8,
       };
 
+    case ActionType.LOAD_PROMO:
+      return {
+        ...state,
+        promo: adapterToClient(action.payload),
+      };
+
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: action.payload,
+        films: action.payload.map((item) => adapterToClient(item)),
+        isDataLoaded: true,
       };
 
     default:

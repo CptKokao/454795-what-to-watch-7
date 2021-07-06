@@ -11,12 +11,17 @@ import Film from '../pages/Film/Film';
 import AddReview from '../pages/AddReview/AddReview';
 import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
+import Loader from '../common/Loader/Loader';
 
 import filmProp from './film.prop';
-import promoProp from './promo.prop';
 
-function App({films, promo}) {
+function App({films, promo, isDataLoaded}) {
+  if (!isDataLoaded) {
+    return <Loader/>;
+  }
+
   return (
+
     <BrowserRouter>
       <Switch>
         {/* / */}
@@ -75,12 +80,14 @@ App.propTypes = {
   films: PropTypes.arrayOf(
     filmProp,
   ),
-  promo: promoProp,
+  promo: filmProp,
+  isDataLoaded: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   promo: state.promo,
+  isDataLoaded: state.isDataLoaded,
 });
 
 export {App};
