@@ -8,3 +8,8 @@ export const AppRoute = {
   ADDREVIEW: '/films/:id?/add-review',
   PLAYER: '/player/:id?',
 };
+
+export const APIRoute = {
+  FILMS: '/films',
+  PROMO: '/promo',
+};

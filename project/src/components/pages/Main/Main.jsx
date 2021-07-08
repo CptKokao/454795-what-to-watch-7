@@ -5,7 +5,6 @@ import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
 import filmProp from '../../App/film.prop';
-import promoProp from '../../App/promo.prop';
 
 function Main({ promo, films }) {
 
@@ -70,7 +69,7 @@ Main.propTypes = {
   films: PropTypes.arrayOf(
     filmProp,
   ),
-  promo: promoProp,
+  promo: filmProp,
 };
 
 export default Main;
