@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {AppRoute} from '../../const';
 import Main from '../pages/Main/Main';
 import SignIn from '../pages/SignIn/SignIn';
 import MyList from '../pages/MyList/MyList';
@@ -12,11 +12,16 @@ import AddReview from '../pages/AddReview/AddReview';
 import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
 import Loader from '../common/Loader/Loader';
+import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
 
+import { AuthorizationStatus, AppRoute } from '../../const';
 import filmProp from './film.prop';
 
-function App({films, promo, isDataLoaded}) {
-  if (!isDataLoaded) {
+const isCheckedAuth = (status) =>
+  status === AuthorizationStatus.UNKNOWN;
+
+function App({films, promo, isDataLoaded, statusAuth}) {
+  if (isCheckedAuth(statusAuth) || !isDataLoaded) {
     return <Loader/>;
   }
 
@@ -30,14 +35,24 @@ function App({films, promo, isDataLoaded}) {
         </Route>
 
         {/* /login */}
-        <Route path={AppRoute.LOGIN} exact>
-          <SignIn />
-        </Route>
+        <Route
+          path={AppRoute.LOGIN}
+          exact
+          render={() => (
+            AuthorizationStatus.AUTH === statusAuth ? (
+              <Redirect to={AppRoute.MAIN} />
+            ) : (
+              <SignIn/>
+            )
+          )}
+        />
 
         {/* /mylist */}
-        <Route path={AppRoute.MYLIST} exact>
-          <MyList films={films} />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.MYLIST}
+          render={() => <MyList films={films} />}
+        />
 
         {/* /films/:id */}
         <Route
@@ -49,12 +64,10 @@ function App({films, promo, isDataLoaded}) {
         />
 
         {/* /films/:id/add-review */}
-        <Route
-          path={AppRoute.ADDREVIEW}
+        <PrivateRoute
           exact
-          render={({ match }) => (
-            <AddReview films={films} id={match.params.id}/>
-          )}
+          path={AppRoute.ADDREVIEW}
+          render={({ match }) => <AddReview films={films} id={match.params.id}/>}
         />
 
         {/* /player/:id */}
@@ -81,13 +94,15 @@ App.propTypes = {
     filmProp,
   ),
   promo: filmProp,
-  isDataLoaded: PropTypes.bool,
+  isDataLoaded: PropTypes.bool.isRequired,
+  statusAuth: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   promo: state.promo,
   isDataLoaded: state.isDataLoaded,
+  statusAuth: state.authorizationStatus,
 });
 
 export {App};

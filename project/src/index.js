@@ -6,12 +6,14 @@ import {reducer} from './store/reducer';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-import {fetchFilmList, fetchPromo} from './store/actions';
+import {fetchFilmList, fetchPromo, ActionCreator, checkAuth} from './store/actions';
 import {createAPI} from './services/api';
-import App from './components/App/App';
+import {AuthorizationStatus} from './const';
+import App from './components/App/app';
 
-const api = createAPI();
-
+const api = createAPI(
+  () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
+);
 const store = createStore(
   reducer,
   composeWithDevTools(
@@ -21,6 +23,7 @@ const store = createStore(
 
 store.dispatch(fetchFilmList());
 store.dispatch(fetchPromo());
+store.dispatch(checkAuth());
 
 ReactDOM.render(
   <React.StrictMode>

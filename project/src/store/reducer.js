@@ -1,5 +1,6 @@
 import { ActionType } from './actions';
-import { adapterToClient } from '../store/adapter';
+import { adapterToClient } from '../services/adapter';
+import { AuthorizationStatus} from '../const';
 
 const initialState = {
   genres: 'All genres',
@@ -7,6 +8,9 @@ const initialState = {
   films: [],
   promo: {},
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  avatarImg: 'img/avatar.jpg',
+  email: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +40,30 @@ const reducer = (state = initialState, action) => {
         ...state,
         films: action.payload.map((item) => adapterToClient(item)),
         isDataLoaded: true,
+      };
+
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+      };
+
+    case ActionType.CHANGE_AVATAR:
+      return {
+        ...state,
+        avatarImg: action.payload,
+      };
+
+    case ActionType.CHANGE_EMAIL:
+      return {
+        ...state,
+        email: action.payload,
       };
 
     default:
