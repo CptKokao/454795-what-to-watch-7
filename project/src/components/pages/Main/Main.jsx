@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {useHistory} from 'react-router-dom';
 
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
 import filmProp from '../../App/film.prop';
+import { AppRoute } from '../../../const';
 
 function Main({ promo, films }) {
+  const history = useHistory();
 
   return (
     <>
@@ -39,7 +42,12 @@ function Main({ promo, films }) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+
+                <button
+                  onClick={() => history.push(AppRoute.MYLIST)}
+                  className="btn btn--list film-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -56,7 +64,6 @@ function Main({ promo, films }) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ListGenres films={films} />
-
         </section>
 
         <Footer />

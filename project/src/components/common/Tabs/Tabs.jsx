@@ -33,7 +33,6 @@ function Tabs({ film }) {
   );
 }
 
-
 Tabs.propTypes = {
   film: filmProp,
 };
