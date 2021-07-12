@@ -7,6 +7,7 @@ export const AppRoute = {
   DETAILS: '/films/:id?/details',
   ADDREVIEW: '/films/:id?/add-review',
   PLAYER: '/player/:id?',
+  NOTFOUND: '/404',
 };
 
 export const APIRoute = {
@@ -14,6 +15,8 @@ export const APIRoute = {
   PROMO: '/promo',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  COMMENTS: '/comments',
+  FAVORITE: '/favorite',
 };
 
 export const AuthorizationStatus = {

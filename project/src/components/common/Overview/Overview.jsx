@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Overview({ rating, description, scoresCount, director, starring}) {
-
   const getLevel = React.useCallback(() => {
     if (Math.trunc(rating) === 10) {
       return 'Awesome';
@@ -36,7 +35,7 @@ function Overview({ rating, description, scoresCount, director, starring}) {
 
         <p className="film-card__starring">
           <strong>Starring:&nbsp;
-            {starring.join(', ')}
+            {starring && starring.join(', ')}
           </strong>
         </p>
       </div>

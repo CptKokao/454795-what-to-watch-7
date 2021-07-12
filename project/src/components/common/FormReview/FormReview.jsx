@@ -1,8 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 
-function FormReview() {
+import { addReview } from '../../../store/actions';
+import {APIRoute} from '../../../const';
+
+function FormReview({ onSubmit, id }) {
+  const history = useHistory();
+
   const [rating, setRating] = React.useState(1);
   const [review, setReview] = React.useState('');
+  const [valid, seValid] = React.useState(false);
 
   function handleChangeRating(e) {
     e.preventDefault();
@@ -12,14 +21,38 @@ function FormReview() {
 
   function handleChangeText(e) {
     e.preventDefault();
-    const { value } = e.target;
+    const MAX_LENGTH = 400;
+    const MIN_LENGTH = 50;
+    const { value, textLength } = e.target;
+
     setReview(value);
+
+    if (textLength >= MIN_LENGTH && textLength <= MAX_LENGTH) {
+      seValid(true);
+    } else {
+      seValid(false);
+    }
   }
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit({
+      rating: rating,
+      comment: review,
+      id: id,
+    })
+      .then(() => history.push(`${APIRoute.FILMS}/${id}`));
+  };
 
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form
+        onSubmit={handleSubmit}
+        action="#"
+        className="add-review__form"
+      >
         <div className="rating">
           <div className="rating__stars" >
             {[...Array(10)].map((item, i, array) => {
@@ -45,24 +78,36 @@ function FormReview() {
         <div className="add-review__text">
           <textarea
             className="add-review__textarea"
-            name="review-text" id="review-text"
+            name="review-text"
+            id="review-text"
             placeholder="Review text"
             onChange={handleChangeText}
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              disabled={!valid ? 'disabled' : ''}
+              className="add-review__btn"
+              type="submit"
+            >
+              Post
+            </button>
           </div>
         </div>
       </form>
 
-      {/*
-        * Времено, чтобы eslint не ругался.
-        * Далее, эту переменную будем использовать в объекте, для отправки на сервер.
-      */}
       {review}
     </div>
   );
 }
 
+FormReview.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+};
 
-export default FormReview;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (authData, id) => dispatch(addReview(authData, id)),
+});
+
+export {FormReview};
+export default connect(null, mapDispatchToProps)(FormReview);

@@ -16,7 +16,7 @@ function SignIn({onSubmit}) {
     evt.preventDefault();
 
     onSubmit({
-      login: loginRef.current.value,
+      email: loginRef.current.value,
       password: passwordRef.current.value.trim(),
     });
   };
@@ -83,14 +83,13 @@ function SignIn({onSubmit}) {
     </div>
   );
 }
+
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
+  onSubmit: (authData) => dispatch(login(authData)),
 });
 
 export {SignIn};

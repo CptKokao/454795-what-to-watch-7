@@ -1,14 +1,21 @@
 import {APIRoute, AuthorizationStatus} from '../const';
 
 export const ActionType = {
-  CHANGE_GENRES: 'ListGenres/changeGenres',
-  CHANGE_LIMIT: 'ListGenres/changeLimit',
+  CHANGE_GENRES: 'listGenres/changeGenres',
+  CHANGE_LIMIT: 'listGenres/changeLimit',
   LOAD_FILMS: 'data/loadFilms',
+  LOAD_ACTIVE_FILM: 'data/loadFilmId',
   LOAD_PROMO: 'data/loadPromo',
-  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
+  LOAD_REVIEWS: 'data/loadReviews',
+  // ADD_FAVORITE_FILM: 'data/addFavoriteFilm',
+  // DELETE_FAVORITE_FILM: 'data/deleteFavoriteFilm',
+  LOAD_FAVORITES: 'data/loadFavoriteFilm',
   CHANGE_AVATAR: 'user/changeAvatar',
   CHANGE_EMAIL: 'user/changeEmail',
+  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'user/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -19,11 +26,27 @@ export const ActionCreator = {
   changeLimit: () => ({
     type: ActionType.CHANGE_LIMIT,
   }),
-  loadFilms: (films) => ({
+  loadListFilms: (films) => ({
     type: ActionType.LOAD_FILMS,
     payload: films,
   }),
-  loadPromo: (films) => ({
+  loadActiveFilm: (film) => ({
+    type: ActionType.LOAD_ACTIVE_FILM,
+    payload: film,
+  }),
+  loadSimilarFilms: (films) => ({
+    type: ActionType.LOAD_SIMILAR_FILMS,
+    payload: films,
+  }),
+  loadListReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews,
+  }),
+  loadListFavotites: (favorites) => ({
+    type: ActionType.LOAD_FAVORITES,
+    payload: favorites,
+  }),
+  loadPromoFilm: (films) => ({
     type: ActionType.LOAD_PROMO,
     payload: films,
   }),
@@ -42,20 +65,71 @@ export const ActionCreator = {
   logout: () => ({
     type: ActionType.LOGOUT,
   }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  }),
 };
 
 // Возвращает список фильмов
-export const fetchFilmList  = () => (dispatch, _getState, api) => (
+export const loadListFilms = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
-    .then(({data}) => dispatch(ActionCreator.loadFilms(data)))
+    .then(({data}) => dispatch(ActionCreator.loadListFilms(data)))
     .catch(() => {})
 );
 
 // Возвращает промо фильм
-export const fetchPromo  = () => (dispatch, _getState, api) => (
+export const loadPromoFilm = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PROMO)
-    .then(({data}) => dispatch(ActionCreator.loadPromo(data)))
+    .then(({data}) => dispatch(ActionCreator.loadPromoFilm(data)))
     .catch(() => {})
+);
+
+
+// Возвращает конкретный фильм по [:id]
+export const loadActiveFilm = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadActiveFilm(data)))
+);
+
+// Возвращает список похожих фильмов
+export const loadSimilarFilms = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}/similar`)
+    .then(({data}) => dispatch(ActionCreator.loadSimilarFilms(data)))
+    .catch(() => {})
+);
+
+// Возвращает отзыв фильма по [:id]
+export const loadListReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadListReviews(data)))
+    .catch(() => {})
+);
+
+// Возвращает списиок добавленных фильмов MyList
+export const loadListFavotites = () => (dispatch, _getState, api) => (
+
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(ActionCreator.loadListFavotites(data)))
+    .catch(() => {})
+);
+
+// Добавляет фильм в MyList
+export const addFavoriteFilm = (id) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/1`)
+    .catch(() => {})
+);
+
+// Удаляет фильм из MyList
+export const deleteFavoriteFilm = (id) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/0`)
+    .catch(() => {})
+
+);
+
+// Отправляет отзыв
+export const addReview = ({rating, comment, id}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
 );
 
 /*
@@ -66,7 +140,7 @@ export const fetchPromo  = () => (dispatch, _getState, api) => (
     - Меняет статус
     - Меняет avatar
 */
-export const login = ({login: email, password}) => (dispatch, _getState, api) => {
+export const login = ({email, password}) => (dispatch, _getState, api) => {
   function onLogIn(data) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('avatar_url', data.avatar_url);

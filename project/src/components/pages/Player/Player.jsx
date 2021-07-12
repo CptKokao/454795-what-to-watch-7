@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {loadListFilms} from '../../../store/actions';
 import filmProp from '../../App/film.prop';
 
-function Player({ films, id }) {
-  const film = films[id - 1] ;
+function Player({ match, listFilms, getListFilms  }) {
+  const id = +match.params.id;
+
+  // Првоеряет текущий фильм в списке избранных
+  function checkFavorite() {
+    console.log(listFilms.filter((item) => item.id === (+id)))
+    return listFilms.filter((item) => item.id === (+id));
+  }
 
   return (
     <div className="player">
@@ -43,10 +50,24 @@ function Player({ films, id }) {
 }
 
 Player.propTypes = {
-  films: PropTypes.arrayOf(
+  listFilms: PropTypes.arrayOf(
     filmProp,
   ),
-  id: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
+  // isDataActiveFilmLoaded: PropTypes.bool.isRequired,
+  getListFilms: PropTypes.func.isRequired,
+
 };
 
-export default Player;
+const mapDispatchToProps = (dispatch) => ({
+  getListFilms: () => dispatch(loadListFilms()),
+});
+
+const mapStateToProps = (state) => ({
+  listFilms: state.listFilms,
+  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
+});
+
+export {Player};
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
+

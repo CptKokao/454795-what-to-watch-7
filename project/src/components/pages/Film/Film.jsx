@@ -1,45 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import { AuthorizationStatus } from '../../../const';
 import {useHistory} from 'react-router-dom';
 
+import {loadActiveFilm, loadSimilarFilms, addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions';
+import {AppRoute} from '../../../const';
 import ListCards from '../../common/ListCards/ListCards';
 import Tabs from '../../common/Tabs/Tabs';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
+import Loader from '../../common/Loader/Loader';
+import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import filmProp from '../../App/film.prop';
-import { AppRoute } from '../../../const';
 
-function Film({ films, id }) {
+function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarFilms, authorizationStatus, isDataActiveFilmLoaded }) {
   const history = useHistory();
+  const id = +match.params.id;
 
-  const film = films[id];
+  React.useEffect(() => {
+    getActivetFilm(id)
+      .catch(() => history.push(AppRoute.NOTFOUND));
 
-  // Ищет похожие фильмы
-  const getSimilarFilms = React.useCallback(() => {
-    const similarFilms = films.filter((item) => {
+    getSimilarFilms(id);
+  }, [getActivetFilm, getSimilarFilms, history, id]);
 
-      // Если эта не текущая картчока, добавить в массив, иначе не добовлять
-      if (item.name !== film.name) {
-        return item.genre === film.genre;
-      }
-      return false;
-    });
-
-    // Если карточек больше 4, отобразить первые 4 карточек
-    if (similarFilms.lenght > 4) {
-      return similarFilms.slice(0,4);
-    }
-
-    return similarFilms;
-  }, [film.genre, film.name, films]);
+  if (!isDataActiveFilmLoaded) {
+    return <Loader/>;
+  }
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name} />
+            <img src={activeFilm.backgroundImage} alt={activeFilm.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -48,10 +44,10 @@ function Film({ films, id }) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
+              <h2 className="film-card__title">{activeFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
+                <span className="film-card__genre">{activeFilm.genre}</span>
+                <span className="film-card__year">{activeFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -62,20 +58,11 @@ function Film({ films, id }) {
                   <span>Play</span>
                 </button>
 
+                <BtnMyList id={id} />
 
-                <button
-                  onClick={() => history.push(AppRoute.MYLIST)}
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-
-
-                <Link to={`/films/${id}/add-review`} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.AUTH && (
+                  <Link to={`/films/${id}/add-review`} className="btn film-card__button">Add review</Link>
+                )}
               </div>
             </div>
           </div>
@@ -84,10 +71,10 @@ function Film({ films, id }) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={film.name} width="218" height="327" />
+              <img src={activeFilm.posterImage} alt={activeFilm.name} width="218" height="327" />
             </div>
 
-            <Tabs film={film} />
+            <Tabs id={id} activeFilm={activeFilm} />
           </div>
         </div>
       </section>
@@ -97,7 +84,8 @@ function Film({ films, id }) {
           <h2 className="catalog__title">More like this</h2>
 
           {/* Список похожих карточек с фильмами, не больше 4 */}
-          <ListCards films={getSimilarFilms()} />
+          {listSimilarFilms && <ListCards listFilms={listSimilarFilms} />}
+
         </section>
 
         <Footer />
@@ -107,10 +95,33 @@ function Film({ films, id }) {
 }
 
 Film.propTypes = {
-  films: PropTypes.arrayOf(
+  activeFilm: filmProp,
+  listSimilarFilms: PropTypes.arrayOf(
     filmProp,
   ),
-  id: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataActiveFilmLoaded: PropTypes.bool.isRequired,
+  getActivetFilm: PropTypes.func.isRequired,
+  getSimilarFilms: PropTypes.func.isRequired,
+
 };
 
-export default Film;
+const mapDispatchToProps = (dispatch) => ({
+  getActivetFilm: (id) => dispatch(loadActiveFilm(id)),
+  getSimilarFilms: (id) => dispatch(loadSimilarFilms(id)),
+  addToFavoriteFilm: (id) => dispatch(addFavoriteFilm(id)),
+  deleteToFavoriteFilm: (id) => dispatch(deleteFavoriteFilm(id)),
+  getListFavotites: () => dispatch(loadListFavotites()),
+});
+
+const mapStateToProps = (state) => ({
+  activeFilm: state.activeFilm,
+  listSimilarFilms: state.listSimilarFilms,
+  authorizationStatus: state.authorizationStatus,
+  listFavoriteFilms: state.listFavoriteFilms,
+  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
+});
+
+export {Film};
+export default connect(mapStateToProps, mapDispatchToProps)(Film);
