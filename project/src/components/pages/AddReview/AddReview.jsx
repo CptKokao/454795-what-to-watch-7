@@ -24,7 +24,7 @@ function AddReview({ match, getActivetFilm, activeFilm, isDataActiveFilmLoaded})
       getActivetFilm(id)
         .catch(() => history.push(AppRoute.NOTFOUND));
     }
-  }, []);
+  }, [activeFilm, getActivetFilm, history, id]);
 
   if (!isDataActiveFilmLoaded) {
     return <Loader/>;

@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import {loadListFilms} from '../../../store/actions';
 import filmProp from '../../App/film.prop';
 
 function Player({ match, listFilms, getListFilms  }) {
   const id = +match.params.id;
-
-  // Првоеряет текущий фильм в списке избранных
-  function checkFavorite() {
-    console.log(listFilms.filter((item) => item.id === (+id)))
-    return listFilms.filter((item) => item.id === (+id));
-  }
+  const film = listFilms[id - 1] ;
 
   return (
     <div className="player">
