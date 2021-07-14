@@ -15,11 +15,11 @@ import Loader from '../common/Loader/Loader';
 import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
 import { AuthorizationStatus, AppRoute } from '../../const';
 
-const isCheckedAuth = (status) =>
+const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;
 
 function App({ statusAuth }) {
-  if (isCheckedAuth(statusAuth)) {
+  if (isUserGuest(statusAuth)) {
     return <Loader/>;
   }
 

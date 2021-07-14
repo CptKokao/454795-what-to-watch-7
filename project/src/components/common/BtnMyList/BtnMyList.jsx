@@ -13,9 +13,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
     getListFavotites();
   }, [getListFavotites]);
 
-  // Здесь нужно async/await, для того-чтобы точно дождаться добавления а только потом запросить список?
-  // addFavorite срабатывает всегда корректно, но fetchFavotites не всегда возвращает ожидаемый результат,
-  // как быудто на сервере данные не успели измениться и мне возвращается старые данные
+  // Сейчас работает корректно
   async function addFavorite() {
     await addToFavoriteFilm(id);
     await getListFavotites();
@@ -26,8 +24,8 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
     await getListFavotites();
   }
 
-  // Првоеряет текущий фильм в списке избранных
-  function checkFavorite() {
+  // Получает текущий фильм в списке избранных
+  function getFavoriteById() {
     return listFavoriteFilms.find((item) => item.id === (+id));
   }
 
@@ -42,7 +40,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
     );
   }
 
-  if(checkFavorite()) {
+  if(getFavoriteById()) {
     return (
       <button
         onClick={() => deleteFavorite()}

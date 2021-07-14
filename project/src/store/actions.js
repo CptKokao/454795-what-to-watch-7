@@ -8,14 +8,11 @@ export const ActionType = {
   LOAD_PROMO: 'data/loadPromo',
   LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
   LOAD_REVIEWS: 'data/loadReviews',
-  // ADD_FAVORITE_FILM: 'data/addFavoriteFilm',
-  // DELETE_FAVORITE_FILM: 'data/deleteFavoriteFilm',
   LOAD_FAVORITES: 'data/loadFavoriteFilm',
   CHANGE_AVATAR: 'user/changeAvatar',
   CHANGE_EMAIL: 'user/changeEmail',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'user/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -64,10 +61,6 @@ export const ActionCreator = {
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
   }),
 };
 
