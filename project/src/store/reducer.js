@@ -5,9 +5,17 @@ import { AuthorizationStatus} from '../const';
 const initialState = {
   genres: 'All genres',
   limit: 8,
-  films: [],
-  promo: {},
+  listFilms: [],
+  listSimilarFilms: [],
+  listFavoriteFilms: [],
+  listReviews: [],
+  activeFilm: {},
+  promoFilm: {},
   isDataLoaded: false,
+  isDataPromoFilmLoaded: false,
+  isDataActiveFilmLoaded: false,
+  isDataReviewsLoaded: false,
+  isFavoriteFilmsLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   avatarImg: 'img/avatar.jpg',
   email: '',
@@ -32,14 +40,35 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PROMO:
       return {
         ...state,
-        promo: adapterToClient(action.payload),
+        promoFilm: adapterToClient(action.payload),
+        isDataPromoFilmLoaded: true,
       };
 
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: action.payload.map((item) => adapterToClient(item)),
+        listFilms: action.payload.map((item) => adapterToClient(item)),
         isDataLoaded: true,
+      };
+
+    case ActionType.LOAD_ACTIVE_FILM:
+      return {
+        ...state,
+        activeFilm: adapterToClient(action.payload),
+        isDataActiveFilmLoaded: true,
+      };
+
+    case ActionType.LOAD_SIMILAR_FILMS:
+      return {
+        ...state,
+        listSimilarFilms: action.payload.map((item) => adapterToClient(item)),
+      };
+
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        listReviews: action.payload,
+        isDataReviewsLoaded: true,
       };
 
     case ActionType.REQUIRED_AUTHORIZATION:
@@ -64,6 +93,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         email: action.payload,
+      };
+
+    case ActionType.LOAD_FAVORITES:
+      return {
+        ...state,
+        listFavoriteFilms: action.payload.map((item) => adapterToClient(item)),
+        isFavoriteFilmsLoaded: true,
       };
 
     default:

@@ -16,9 +16,7 @@ LoadMore.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  changeLimitFilms() {
-    dispatch(ActionCreator.changeLimit());
-  },
+  changeLimitFilms: () => dispatch(ActionCreator.changeLimit()),
 });
 
 export {LoadMore};

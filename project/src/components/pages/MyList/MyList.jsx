@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
+import {loadListFavotites} from '../../../store/actions';
 import ListCards from '../../common/ListCards/ListCards';
 import Logo from '../../common/Header/Logo';
 import Footer from '../../common/Footer/Footer';
 import Avatar from '../../common/Header/Avatar';
+import Loader from '../../common/Loader/Loader';
 import filmProp from '../../App/film.prop';
 
-function MyList({ films }) {
+function MyList({ getListFavotites, listFavoriteFilms, isFavoriteFilmsLoaded }) {
+
+  React.useEffect(() => {
+    getListFavotites();
+  }, [getListFavotites]);
+
+  if (!isFavoriteFilmsLoaded) {
+    return <Loader/>;
+  }
+
 
   return (
     <div className="user-page">
@@ -23,7 +35,7 @@ function MyList({ films }) {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__films-list">
 
-          <ListCards films={films} />
+          <ListCards listFilms={listFavoriteFilms} />
         </div>
       </section>
 
@@ -33,9 +45,22 @@ function MyList({ films }) {
 }
 
 MyList.propTypes = {
-  films: PropTypes.arrayOf(
+  listFavoriteFilms: PropTypes.arrayOf(
     filmProp,
   ),
+  getListFavotites: PropTypes.func.isRequired,
+  isFavoriteFilmsLoaded: PropTypes.bool.isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  listFavoriteFilms: state.listFavoriteFilms,
+  isFavoriteFilmsLoaded: state.isFavoriteFilmsLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getListFavotites: () => dispatch(loadListFavotites()),
+});
+
+
+export {MyList};
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 import Card from '../Card/Card';
 import filmProp from '../../App/film.prop';
 
-function ListCards({ films }) {
+function ListCards({ listFilms }) {
 
   return (
     <div className="catalog__films-list">
-      {films.map((card, index) => (
-        <Card {...card} id={index} key={card.id}/>
+      {listFilms.map((card) => (
+        <Card {...card} id={card.id} key={card.id}/>
       ))}
     </div>
   );
 }
 
 ListCards.propTypes = {
-  films: PropTypes.arrayOf(
+  listFilms: PropTypes.arrayOf(
     filmProp,
   ),
 };

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { logout } from '../../../store/actions';
 
-function Avatar({avatar, email, status, onLogout}) {
+function Avatar({avatar, email, authorizationStatus, onLogout}) {
+  const history = useHistory();
 
   const handlerLogout = (evt) => {
     evt.preventDefault();
@@ -22,11 +24,12 @@ function Avatar({avatar, email, status, onLogout}) {
             alt="User avatar"
             width="63"
             height="63"
+            onClick={() => history.push(AppRoute.MYLIST)}
           />
         </div>
       </li>
       <li className="user-block__item">
-        {status === AuthorizationStatus.AUTH
+        {authorizationStatus === AuthorizationStatus.AUTH
           ? (
             <>
               <span onClick={handlerLogout} className="user-block__link"><br/>Sign out</span>
@@ -40,22 +43,20 @@ function Avatar({avatar, email, status, onLogout}) {
 }
 
 Avatar.propTypes = {
-  status: PropTypes.string.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  status: state.authorizationStatus,
+  authorizationStatus: state.authorizationStatus,
   avatar: state.avatarImg,
   email: state.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogout() {
-    dispatch(logout());
-  },
+  onLogout: () => dispatch(logout()),
 });
 
 export {Avatar};

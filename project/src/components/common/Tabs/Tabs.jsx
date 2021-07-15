@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Overview from '../../common/Overview/Overview';
 import Reviews from '../../common/Reviews/Reviews';
 import Details from '../../common/Details/Details';
 import filmProp from '../../App/film.prop';
 
-function Tabs({ film }) {
+function Tabs({ activeFilm, id }) {
   const [ active, setActive ] = React.useState(0);
   const openTab = (e) => setActive(+e.target.dataset.index);
 
@@ -26,15 +28,16 @@ function Tabs({ film }) {
         </ul>
       </nav>
 
-      {active === 0 && <Overview {...film} />}
-      {active === 1 && <Details {...film} />}
-      {active === 2 && <Reviews {...film} />}
+      {active === 0 && <Overview {...activeFilm} />}
+      {active === 1 && <Details {...activeFilm} />}
+      {active === 2 && <Reviews id={id} />}
     </div>
   );
 }
 
 Tabs.propTypes = {
-  film: filmProp,
+  activeFilm: filmProp,
+  id: PropTypes.number.isRequired,
 };
 
 export default Tabs;

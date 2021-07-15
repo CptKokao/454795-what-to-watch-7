@@ -13,15 +13,13 @@ import Player from '../pages/Player/Player';
 import NotFound from '../pages/NotFound/NotFound';
 import Loader from '../common/Loader/Loader';
 import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
-
 import { AuthorizationStatus, AppRoute } from '../../const';
-import filmProp from './film.prop';
 
-const isCheckedAuth = (status) =>
+const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;
 
-function App({films, promo, isDataLoaded, statusAuth}) {
-  if (isCheckedAuth(statusAuth) || !isDataLoaded) {
+function App({ statusAuth }) {
+  if (isUserGuest(statusAuth)) {
     return <Loader/>;
   }
 
@@ -30,9 +28,11 @@ function App({films, promo, isDataLoaded, statusAuth}) {
     <BrowserRouter>
       <Switch>
         {/* / */}
-        <Route path={AppRoute.MAIN} exact>
-          <Main films={films} promo={promo} />
-        </Route>
+        <Route
+          path={AppRoute.MAIN}
+          exact
+          component={Main}
+        />
 
         {/* /login */}
         <Route
@@ -51,32 +51,28 @@ function App({films, promo, isDataLoaded, statusAuth}) {
         <PrivateRoute
           exact
           path={AppRoute.MYLIST}
-          render={() => <MyList films={films} />}
+          render={() => <MyList />}
         />
 
         {/* /films/:id */}
         <Route
           path={AppRoute.FILMS}
           exact
-          render={({ match }) => (
-            <Film films={films} id={match.params.id}/>
-          )}
+          component={Film}
         />
 
         {/* /films/:id/add-review */}
         <PrivateRoute
           exact
           path={AppRoute.ADDREVIEW}
-          render={({ match }) => <AddReview films={films} id={match.params.id}/>}
+          render={({ match }) => <AddReview match={match} />}
         />
 
         {/* /player/:id */}
         <Route
           path={AppRoute.PLAYER}
           exact
-          render={({ match }) => (
-            <Player films={films} id={match.params.id}/>
-          )}
+          component={Player}
         />
 
         {/* 404 */}
@@ -90,18 +86,10 @@ function App({films, promo, isDataLoaded, statusAuth}) {
 }
 
 App.propTypes = {
-  films: PropTypes.arrayOf(
-    filmProp,
-  ),
-  promo: filmProp,
-  isDataLoaded: PropTypes.bool.isRequired,
   statusAuth: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  promo: state.promo,
-  isDataLoaded: state.isDataLoaded,
   statusAuth: state.authorizationStatus,
 });
 

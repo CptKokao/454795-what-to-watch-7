@@ -8,15 +8,15 @@ import ListCards from '../../common/ListCards/ListCards';
 import LoadMore from '../../common/LoadMore/LoadMore';
 import filmProp from '../../App/film.prop';
 
-function ListGenres({genres, limit, films, getChangedGenres}) {
+function ListGenres({genres, limit, listFilms, getChangedGenres}) {
 
   // Список уникальных жанров
-  const listGenres= [...new Set(films.map((item) => item.genre))];
+  const listGenres= [...new Set(listFilms.map((item) => item.genre))];
   // Добавляет в начало массива All genres
   listGenres.unshift('All genres');
 
   // Список фильмов для выбранного жанра
-  const filmsByGenre = genres !== 'All genres' ? films.filter((item) => item.genre === genres) : films;
+  const filmsByGenre = genres !== 'All genres' ? listFilms.filter((item) => item.genre === genres) : listFilms;
 
   return (
     <>
@@ -31,7 +31,7 @@ function ListGenres({genres, limit, films, getChangedGenres}) {
         ))}
 
         <div className="catalog__films-list">
-          <ListCards films={filmsByGenre.slice(0, limit)} />
+          <ListCards listFilms={filmsByGenre.slice(0, limit)} />
         </div>
       </ul>
 
@@ -46,7 +46,7 @@ function ListGenres({genres, limit, films, getChangedGenres}) {
 ListGenres.propTypes = {
   genres: PropTypes.string.isRequired,
   limit: PropTypes.number.isRequired,
-  films: PropTypes.arrayOf(
+  listFilms: PropTypes.arrayOf(
     filmProp,
   ),
   getChangedGenres: PropTypes.func.isRequired,
