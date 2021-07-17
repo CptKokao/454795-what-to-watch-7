@@ -13,13 +13,13 @@ function FormReview({ onSubmit, id }) {
   const [review, setReview] = React.useState('');
   const [valid, seValid] = React.useState(false);
 
-  function handleChangeRating(e) {
+  const handleChangeRating = React.useCallback((e) => {
     e.preventDefault();
     const { value } = e.target;
     setRating(+value);
-  }
+  }, []);
 
-  function handleChangeText(e) {
+  const handleChangeText = React.useCallback((e) => {
     e.preventDefault();
     const MAX_LENGTH = 400;
     const MIN_LENGTH = 50;
@@ -32,10 +32,10 @@ function FormReview({ onSubmit, id }) {
     } else {
       seValid(false);
     }
-  }
+  }, []);
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = React.useCallback((e) => {
+    e.preventDefault();
 
     onSubmit({
       rating: rating,
@@ -43,7 +43,7 @@ function FormReview({ onSubmit, id }) {
       id: id,
     })
       .then(() => history.push(`${APIRoute.FILMS}/${id}`));
-  };
+  }, [history, id, onSubmit, rating, review]);
 
 
   return (

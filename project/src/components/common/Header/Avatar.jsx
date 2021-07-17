@@ -10,10 +10,10 @@ import { logout } from '../../../store/actions';
 function Avatar({avatar, email, authorizationStatus, onLogout}) {
   const history = useHistory();
 
-  const handlerLogout = (evt) => {
+  const handlerLogout = React.useCallback((evt) => {
     evt.preventDefault();
     onLogout();
-  };
+  },[onLogout]);
 
   return (
     <ul className="user-block">
@@ -62,4 +62,4 @@ const mapDispatchToProps = (dispatch) => ({
 export {Avatar};
 export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
 
-
+// Почему данный компонент не рендерится заново, в то время как Logo рендерится, если не использовать React.memo()

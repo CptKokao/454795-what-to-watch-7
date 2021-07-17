@@ -11,6 +11,7 @@ import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import Loader from '../../common/Loader/Loader';
 
 function Main({ getListFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLoaded }) {
+
   React.useEffect(() => {
     getListFilms();
     getPromoFilm();

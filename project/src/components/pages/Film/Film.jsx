@@ -19,6 +19,7 @@ function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarF
   const history = useHistory();
   const id = +match.params.id;
 
+
   React.useEffect(() => {
     getActivetFilm(id)
       .catch(() => history.push(AppRoute.NOTFOUND));

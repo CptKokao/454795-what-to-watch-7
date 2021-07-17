@@ -24,10 +24,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
     await getListFavotites();
   }
 
-  // Получает текущий фильм в списке избранных
-  function getFavoriteById() {
-    return listFavoriteFilms.find((item) => item.id === (+id));
-  }
+  const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
 
   if (authorizationStatus !== AuthorizationStatus.AUTH) {
     return (
@@ -43,7 +40,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
   if(getFavoriteById()) {
     return (
       <button
-        onClick={() => deleteFavorite()}
+        onClick={deleteFavorite}
         className="btn btn--list film-card__button"
         type="button"
       >
@@ -54,7 +51,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
 
   return (
     <button
-      onClick={() => addFavorite()}
+      onClick={addFavorite}
       className="btn btn--list film-card__button"
       type="button"
     >

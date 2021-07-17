@@ -12,14 +12,14 @@ function SignIn({onSubmit}) {
   const loginRef = React.useRef();
   const passwordRef = React.useRef();
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = React.useCallback((e) => {
+    e.preventDefault();
 
     onSubmit({
       email: loginRef.current.value,
       password: passwordRef.current.value.trim(),
     });
-  };
+  }, [onSubmit]);
 
 
   return (
