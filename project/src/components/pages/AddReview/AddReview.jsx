@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {loadActiveFilm} from '../../../store/actions';
+import {loadActiveFilm} from '../../../store/api-actions';
 import {AppRoute} from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';
 import filmProp from '../../App/film.prop';

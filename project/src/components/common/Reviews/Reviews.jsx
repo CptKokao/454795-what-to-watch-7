@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {loadListReviews} from '../../../store/actions';
+import {loadListReviews} from '../../../store/api-actions';
 import Loader from '../../../components/common/Loader/Loader';
 
 function Reviews({ id, getReviews, listReviews, isDataReviewsLoaded }) {

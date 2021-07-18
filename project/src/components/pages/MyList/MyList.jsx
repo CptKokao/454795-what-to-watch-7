@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {loadListFavotites} from '../../../store/actions';
+import {loadListFavotites} from '../../../store/api-actions';
 import ListCards from '../../common/ListCards/ListCards';
 import Logo from '../../common/Header/Logo';
 import Footer from '../../common/Footer/Footer';

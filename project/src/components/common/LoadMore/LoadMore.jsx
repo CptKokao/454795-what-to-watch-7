@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../store/actions';
+import {changeLimit} from '../../../store/actions';
 
 function LoadMore({changeLimitFilms}) {
   return (
@@ -16,7 +16,7 @@ LoadMore.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  changeLimitFilms: () => dispatch(ActionCreator.changeLimit()),
+  changeLimitFilms: () => dispatch(changeLimit()),
 });
 
 export {LoadMore};

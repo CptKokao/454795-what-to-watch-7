@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 
-import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions';
+import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
 import filmProp from '../../App/film.prop';
 
 function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFilms, getListFavotites, authorizationStatus}) {

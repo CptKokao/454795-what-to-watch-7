@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../store/actions';
+import {changeGenres} from '../../../store/actions';
 
 import ListCards from '../../common/ListCards/ListCards';
 import LoadMore from '../../common/LoadMore/LoadMore';
@@ -55,7 +55,7 @@ ListGenres.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   getChangedGenres(e) {
     if (e.target.className === 'catalog__genres-link') {
-      dispatch(ActionCreator.changeGenres(e.target.innerText));
+      dispatch(changeGenres(e.target.innerText));
     }
   },
 });

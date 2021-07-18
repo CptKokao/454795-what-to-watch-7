@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {loadListFilms} from '../../../store/actions';
+import {loadListFilms} from '../../../store/api-actions';
 import filmProp from '../../App/film.prop';
 
 function Player({ match, listFilms, getListFilms  }) {

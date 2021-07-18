@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import { AuthorizationStatus } from '../../../const';
 import {useHistory} from 'react-router-dom';
 
-import {loadActiveFilm, loadSimilarFilms, addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions';
+import {loadActiveFilm, loadSimilarFilms, addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
 import {AppRoute} from '../../../const';
 import ListCards from '../../common/ListCards/ListCards';
 import Tabs from '../../common/Tabs/Tabs';

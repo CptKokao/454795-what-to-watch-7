@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {loadPromoFilm, loadListFilms} from '../../../store/actions';
+import {loadPromoFilm, loadListFilms} from '../../../store/api-actions';
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
