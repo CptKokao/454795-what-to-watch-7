@@ -52,16 +52,15 @@ Player.propTypes = {
   match: PropTypes.object.isRequired,
   // isDataActiveFilmLoaded: PropTypes.bool.isRequired,
   getListFilms: PropTypes.func.isRequired,
-
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getListFilms: () => dispatch(loadListFilms()),
 });
 
-const mapStateToProps = (state) => ({
-  listFilms: state.listFilms,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
+const mapStateToProps = ({FILM}) => ({
+  listFilms: FILM.listFilms,
+  isDataActiveFilmLoaded: FILM.isDataActiveFilmLoaded,
 });
 
 export {Player};

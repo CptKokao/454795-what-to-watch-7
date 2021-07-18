@@ -19,7 +19,6 @@ function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarF
   const history = useHistory();
   const id = +match.params.id;
 
-
   React.useEffect(() => {
     getActivetFilm(id)
       .catch(() => history.push(AppRoute.NOTFOUND));
@@ -116,12 +115,12 @@ const mapDispatchToProps = (dispatch) => ({
   getListFavotites: () => dispatch(loadListFavotites()),
 });
 
-const mapStateToProps = (state) => ({
-  activeFilm: state.activeFilm,
-  listSimilarFilms: state.listSimilarFilms,
-  authorizationStatus: state.authorizationStatus,
-  listFavoriteFilms: state.listFavoriteFilms,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
+const mapStateToProps = ({FILM, USER}) => ({
+  activeFilm: FILM.activeFilm,
+  listSimilarFilms: FILM.listSimilarFilms,
+  authorizationStatus: USER.authorizationStatus,
+  listFavoriteFilms: FILM.listFavoriteFilms,
+  isDataActiveFilmLoaded: FILM.isDataActiveFilmLoaded,
 });
 
 export {Film};

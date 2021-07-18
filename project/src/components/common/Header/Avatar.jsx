@@ -49,10 +49,10 @@ Avatar.propTypes = {
   onLogout: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  avatar: state.avatarImg,
-  email: state.email,
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus,
+  avatar: USER.avatarImg,
+  email: USER.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({

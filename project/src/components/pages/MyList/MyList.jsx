@@ -52,15 +52,14 @@ MyList.propTypes = {
   isFavoriteFilmsLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  listFavoriteFilms: state.listFavoriteFilms,
-  isFavoriteFilmsLoaded: state.isFavoriteFilmsLoaded,
+const mapStateToProps = ({FILM}) => ({
+  listFavoriteFilms: FILM.listFavoriteFilms,
+  isFavoriteFilmsLoaded: FILM.isFavoriteFilmsLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getListFavotites: () => dispatch(loadListFavotites()),
 });
-
 
 export {MyList};
 export default connect(mapStateToProps, mapDispatchToProps)(MyList);

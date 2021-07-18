@@ -60,9 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({
-  genres: state.genres,
-  limit: state.limit,
+const mapStateToProps = ({FILM}) => ({
+  genres: FILM.genres,
+  limit: FILM.limit,
 });
 
 export {ListGenres};

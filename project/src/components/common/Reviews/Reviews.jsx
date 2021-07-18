@@ -48,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
   getReviews: (id) => dispatch(loadListReviews(id)),
 });
 
-const mapStateToProps = (state) => ({
-  listReviews: state.listReviews,
-  isDataReviewsLoaded: state.isDataReviewsLoaded,
+const mapStateToProps = ({REVIEW}) => ({
+  listReviews: REVIEW.listReviews,
+  isDataReviewsLoaded: REVIEW.isDataReviewsLoaded,
 });
 
 export {Reviews};

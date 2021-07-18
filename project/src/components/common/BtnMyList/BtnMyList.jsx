@@ -77,9 +77,9 @@ const mapDispatchToProps = (dispatch) => ({
   getListFavotites: () => dispatch(loadListFavotites()),
 });
 
-const mapStateToProps = (state) => ({
-  listFavoriteFilms: state.listFavoriteFilms,
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({FILM}) => ({
+  listFavoriteFilms: FILM.listFavoriteFilms,
+  authorizationStatus: FILM.authorizationStatus,
 });
 
 export {BtnMyList};

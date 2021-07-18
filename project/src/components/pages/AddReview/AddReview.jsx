@@ -78,9 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
   getActivetFilm: (id) => dispatch(loadActiveFilm(id)),
 });
 
-const mapStateToProps = (state) => ({
-  activeFilm: state.activeFilm,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
+const mapStateToProps = ({FILM}) => ({
+  activeFilm: FILM.activeFilm,
+  isDataActiveFilmLoaded: FILM.isDataActiveFilmLoaded,
 });
 
 export {AddReview};

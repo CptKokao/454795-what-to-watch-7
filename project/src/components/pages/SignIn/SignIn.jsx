@@ -21,7 +21,6 @@ function SignIn({onSubmit}) {
     });
   }, [onSubmit]);
 
-
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

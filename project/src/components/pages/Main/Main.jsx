@@ -93,10 +93,10 @@ const mapDispatchToProps = (dispatch) => ({
   getPromoFilm: () => dispatch(loadPromoFilm()),
 });
 
-const mapStateToProps = (state) => ({
-  listFilms: state.listFilms,
-  promoFilm: state.promoFilm,
-  isDataPromoFilmLoaded: state.isDataPromoFilmLoaded,
+const mapStateToProps = ({FILM}) => ({
+  listFilms: FILM.listFilms,
+  promoFilm: FILM.promoFilm,
+  isDataPromoFilmLoaded: FILM.isDataPromoFilmLoaded,
 });
 
 export {Main};
