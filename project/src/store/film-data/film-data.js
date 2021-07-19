@@ -1,5 +1,7 @@
-import { ActionType } from '../actions';
-import { adapterToClient } from '../../services/adapter';
+import {createReducer} from '@reduxjs/toolkit';
+import {getListFilms, getPromoFilm, getActiveFilm, getSimilarFilms, getListFavotites} from '../api-actions';
+import {changeGenre, changeLimit} from '../actions';
+import {adapterToClient} from '../../services/adapter';
 
 const initialState = {
   genre: 'All genres',
@@ -15,60 +17,41 @@ const initialState = {
   isDataFavoriteFilmsLoaded: false,
 };
 
-const filmData = (state = initialState, action) => {
-  switch (action.type) {
+const filmData = createReducer(initialState, (builder) => {
+  builder
 
-    case ActionType.LOAD_FILMS:
-      return {
-        ...state,
-        listFilms: action.payload.map((item) => adapterToClient(item)),
-        isDataFilmsLoaded: true,
-      };
+    .addCase(getListFilms, (state, action) => {
+      state.listFilms = action.payload.map((item) => adapterToClient(item));
+      state.isDataFilmsLoaded = true;
+    })
 
-    case ActionType.LOAD_PROMO:
-      return {
-        ...state,
-        promoFilm: adapterToClient(action.payload),
-        isDataPromoFilmLoaded: true,
-      };
+    .addCase(getPromoFilm, (state, action) => {
+      state.promoFilm = adapterToClient(action.payload);
+      state.isDataPromoFilmLoaded = true;
+    })
 
-    case ActionType.LOAD_ACTIVE_FILM:
-      return {
-        ...state,
-        activeFilm: adapterToClient(action.payload),
-        isDataActiveFilmLoaded: true,
-      };
+    .addCase(getActiveFilm, (state, action) => {
+      state.activeFilm = adapterToClient(action.payload);
+      state.isDataActiveFilmLoaded = true;
+    })
 
-    case ActionType.LOAD_SIMILAR_FILMS:
-      return {
-        ...state,
-        listSimilarFilms: action.payload.map((item) => adapterToClient(item)),
-      };
+    .addCase(getSimilarFilms, (state, action) => {
+      state.listSimilarFilms = action.payload.map((item) => adapterToClient(item));
+    })
 
-    case ActionType.LOAD_FAVORITES:
-      return {
-        ...state,
-        listFavoriteFilms: action.payload.map((item) => adapterToClient(item)),
-        isDataFavoriteFilmsLoaded: true,
-      };
+    .addCase(getListFavotites, (state, action) => {
+      state.listFavoriteFilms = action.payload.map((item) => adapterToClient(item));
+      state.isDataFavoriteFilmsLoaded = true;
+    })
 
-    case ActionType.CHANGE_GENRE:
-      return {
-        ...state,
-        genre: action.payload,
-        limit: 8,
-      };
+    .addCase(changeGenre, (state, action) => {
+      state.genre = action.payload;
+      state.limit = 8;
+    })
 
-    case ActionType.CHANGE_LIMIT:
-      console.log('limit')
-      return {
-        ...state,
-        limit: state.limit + 8,
-      };
-
-    default:
-      return state;
-  }
-};
+    .addCase(changeLimit, (state) => {
+      state.limit = state.limit + 8;
+    });
+});
 
 export {filmData};

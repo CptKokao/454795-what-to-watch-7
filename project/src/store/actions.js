@@ -22,7 +22,7 @@ export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => ({
   payload: genre,
 }));
 
-export const changeLimit = createAction(ActionType.CHANGE_LIMIT)
+export const changeLimit = createAction(ActionType.CHANGE_LIMIT);
 
 export const changeAvatar = createAction(ActionType.CHANGE_AVATAR, (avatar) => ({
   payload: avatar,

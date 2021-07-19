@@ -1,23 +1,18 @@
-import { ActionType } from '../actions';
+import {createReducer} from '@reduxjs/toolkit';
+import {getListReviews} from '../api-actions';
 
 const initialState = {
   listReviews: [],
   isDataReviewsLoaded: false,
 };
 
-const reviewData = (state = initialState, action) => {
-  switch (action.type) {
+const reviewData = createReducer(initialState, (builder) => {
+  builder
 
-    case ActionType.LOAD_REVIEWS:
-      return {
-        ...state,
-        listReviews: action.payload,
-        isDataReviewsLoaded: true,
-      };
-
-    default:
-      return state;
-  }
-};
+    .addCase(getListReviews, (state, action) => {
+      state.listReviews = action.payload;
+      state.isDataReviewsLoaded = true;
+    });
+});
 
 export {reviewData};
