@@ -1,129 +1,43 @@
+import {createAction} from '@reduxjs/toolkit';
 import {APIRoute, AuthorizationStatus} from '../const';
 
 export const ActionType = {
-  CHANGE_GENRES: 'listGenres/changeGenres',
-  CHANGE_LIMIT: 'listGenres/changeLimit',
   LOAD_FILMS: 'data/loadFilms',
   LOAD_ACTIVE_FILM: 'data/loadFilmId',
   LOAD_PROMO: 'data/loadPromo',
   LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
   LOAD_REVIEWS: 'data/loadReviews',
   LOAD_FAVORITES: 'data/loadFavoriteFilm',
+
+  CHANGE_LIMIT: 'loadMore/changeLimit',
+  CHANGE_GENRE: 'listGenres/changeGenre',
   CHANGE_AVATAR: 'user/changeAvatar',
   CHANGE_EMAIL: 'user/changeEmail',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
 };
 
-export const ActionCreator = {
-  changeGenres: (genre) => ({
-    type: ActionType.CHANGE_GENRES,
-    payload: genre,
-  }),
-  changeLimit: () => ({
-    type: ActionType.CHANGE_LIMIT,
-  }),
-  loadListFilms: (films) => ({
-    type: ActionType.LOAD_FILMS,
-    payload: films,
-  }),
-  loadActiveFilm: (film) => ({
-    type: ActionType.LOAD_ACTIVE_FILM,
-    payload: film,
-  }),
-  loadSimilarFilms: (films) => ({
-    type: ActionType.LOAD_SIMILAR_FILMS,
-    payload: films,
-  }),
-  loadListReviews: (reviews) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviews,
-  }),
-  loadListFavotites: (favorites) => ({
-    type: ActionType.LOAD_FAVORITES,
-    payload: favorites,
-  }),
-  loadPromoFilm: (films) => ({
-    type: ActionType.LOAD_PROMO,
-    payload: films,
-  }),
-  changeAvatar: (avatar) => ({
-    type: ActionType.CHANGE_AVATAR,
-    payload: avatar,
-  }),
-  changeEmail: (email) => ({
-    type: ActionType.CHANGE_EMAIL,
-    payload: email,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-};
 
-// Возвращает список фильмов
-export const loadListFilms = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.FILMS)
-    .then(({data}) => dispatch(ActionCreator.loadListFilms(data)))
-    .catch(() => {})
-);
+export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => ({
+  payload: genre,
+}));
 
-// Возвращает промо фильм
-export const loadPromoFilm = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.PROMO)
-    .then(({data}) => dispatch(ActionCreator.loadPromoFilm(data)))
-    .catch(() => {})
-);
+export const changeLimit = createAction(ActionType.CHANGE_LIMIT);
 
+export const changeAvatar = createAction(ActionType.CHANGE_AVATAR, (avatar) => ({
+  payload: avatar,
+}));
 
-// Возвращает конкретный фильм по [:id]
-export const loadActiveFilm = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.FILMS}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadActiveFilm(data)))
-);
+export const changeEmail = createAction(ActionType.CHANGE_EMAIL, (email) => ({
+  payload: email,
+}));
 
-// Возвращает список похожих фильмов
-export const loadSimilarFilms = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.FILMS}/${id}/similar`)
-    .then(({data}) => dispatch(ActionCreator.loadSimilarFilms(data)))
-    .catch(() => {})
-);
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
 
-// Возвращает отзыв фильма по [:id]
-export const loadListReviews = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.COMMENTS}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadListReviews(data)))
-    .catch(() => {})
-);
+export const exitAuthorization = createAction(ActionType.LOGOUT);
 
-// Возвращает списиок добавленных фильмов MyList
-export const loadListFavotites = () => (dispatch, _getState, api) => (
-
-  api.get(APIRoute.FAVORITE)
-    .then(({data}) => dispatch(ActionCreator.loadListFavotites(data)))
-    .catch(() => {})
-);
-
-// Добавляет фильм в MyList
-export const addFavoriteFilm = (id) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.FAVORITE}/${id}/1`)
-    .catch(() => {})
-);
-
-// Удаляет фильм из MyList
-export const deleteFavoriteFilm = (id) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.FAVORITE}/${id}/0`)
-    .catch(() => {})
-
-);
-
-// Отправляет отзыв
-export const addReview = ({rating, comment, id}) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
-);
 
 /*
   Login:
@@ -143,9 +57,9 @@ export const login = ({email, password}) => (dispatch, _getState, api) => {
   return (
     api.post(APIRoute.LOGIN, {email, password})
       .then(({data}) => onLogIn(data, dispatch))
-      .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-      .then(() => dispatch(ActionCreator.changeAvatar(localStorage.getItem('avatar_url'))))
-      .then(() => dispatch(ActionCreator.changeEmail(localStorage.getItem('email'))))
+      .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+      .then(() => dispatch(changeAvatar(localStorage.getItem('avatar_url'))))
+      .then(() => dispatch(changeEmail(localStorage.getItem('email'))))
       .catch(() => {})
   );
 };
@@ -160,19 +74,19 @@ export const login = ({email, password}) => (dispatch, _getState, api) => {
 */
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(exitAuthorization()))
     .then(() => localStorage.removeItem('token'))
     .then(() => localStorage.removeItem('avatar_url'))
     .then(() => localStorage.removeItem('email'))
-    .then(() => dispatch(ActionCreator.changeAvatar('img/avatar.jpg')))
+    .then(() => dispatch(changeAvatar('img/avatar.jpg')))
     .catch(() => {})
 );
 
 // Обновляет информацию на основе localStorage
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.changeAvatar(localStorage.getItem('avatar_url'))))
-    .then(() => dispatch(ActionCreator.changeEmail(localStorage.getItem('email'))))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(changeAvatar(localStorage.getItem('avatar_url'))))
+    .then(() => dispatch(changeEmail(localStorage.getItem('email'))))
     .catch(() => {})
 );

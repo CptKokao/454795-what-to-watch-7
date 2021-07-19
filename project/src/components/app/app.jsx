@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from '../pages/Main/Main';
@@ -14,17 +13,20 @@ import NotFound from '../pages/NotFound/NotFound';
 import Loader from '../common/Loader/Loader';
 import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
 import { AuthorizationStatus, AppRoute } from '../../const';
+import {getStatus} from '../../store/user/selectors';
 
 const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;
 
-function App({ statusAuth }) {
+function App() {
+
+  const statusAuth = useSelector(getStatus);
+
   if (isUserGuest(statusAuth)) {
     return <Loader/>;
   }
 
   return (
-
     <BrowserRouter>
       <Switch>
         {/* / */}
@@ -85,13 +87,5 @@ function App({ statusAuth }) {
   );
 }
 
-App.propTypes = {
-  statusAuth: PropTypes.string.isRequired,
-};
+export default App;
 
-const mapStateToProps = (state) => ({
-  statusAuth: state.authorizationStatus,
-});
-
-export {App};
-export default connect(mapStateToProps)(App);

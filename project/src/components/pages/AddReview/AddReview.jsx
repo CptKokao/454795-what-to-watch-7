@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {loadActiveFilm} from '../../../store/actions';
+import {loadActiveFilm} from '../../../store/api-actions';
+import {getActiveFilm, getIsDataActiveFilmLoaded} from '../../../store/film-data/selectors';
+
 import {AppRoute} from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';
-import filmProp from '../../App/film.prop';
 import Avatar from '../../common/Header/Avatar';
 import Logo from '../../common/Header/Logo';
 import Loader from '../../common/Loader/Loader';
 
-function AddReview({ match, getActivetFilm, activeFilm, isDataActiveFilmLoaded}) {
+function AddReview({ match }) {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const activeFilm = useSelector(getActiveFilm);
+  const isDataActiveFilmLoaded = useSelector(getIsDataActiveFilmLoaded);
   const id = +match.params.id;
 
   React.useEffect(() => {
@@ -21,10 +26,10 @@ function AddReview({ match, getActivetFilm, activeFilm, isDataActiveFilmLoaded})
     // Если ранее фильм был загружен, то объект должен быть не пустой,
     // тогда запрос к сереверу отправлять не нужно, иначе запросить фильм
     if(Object.keys(activeFilm).length === 0) {
-      getActivetFilm(id)
+      dispatch(loadActiveFilm(id))
         .catch(() => history.push(AppRoute.NOTFOUND));
     }
-  }, [activeFilm, getActivetFilm, history, id]);
+  }, [dispatch, activeFilm, history, id]);
 
   if (!isDataActiveFilmLoaded) {
     return <Loader/>;
@@ -68,20 +73,7 @@ function AddReview({ match, getActivetFilm, activeFilm, isDataActiveFilmLoaded})
 }
 
 AddReview.propTypes = {
-  activeFilm: filmProp,
   match: PropTypes.object.isRequired,
-  getActivetFilm: PropTypes.func.isRequired,
-  isDataActiveFilmLoaded: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getActivetFilm: (id) => dispatch(loadActiveFilm(id)),
-});
-
-const mapStateToProps = (state) => ({
-  activeFilm: state.activeFilm,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
-});
-
-export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default AddReview;

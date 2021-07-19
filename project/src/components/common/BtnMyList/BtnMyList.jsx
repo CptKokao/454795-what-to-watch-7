@@ -1,35 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 
-import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions';
-import filmProp from '../../App/film.prop';
+import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
+import {getStatus} from '../../../store/user/selectors';
+import {getListFavoriteFilms} from '../../../store/film-data/selectors';
 
-function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFilms, getListFavotites, authorizationStatus}) {
+function BtnMyList({id}) {
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getListFavotites();
-  }, [getListFavotites]);
+    dispatch(loadListFavotites());
+  }, [dispatch]);
 
   // Сейчас работает корректно
   async function addFavorite() {
-    await addToFavoriteFilm(id);
-    await getListFavotites();
+    await dispatch(addFavoriteFilm(id));
+    await dispatch(loadListFavotites());
   }
 
   async function deleteFavorite() {
-    await deleteToFavoriteFilm(id);
-    await getListFavotites();
+    await dispatch(deleteFavoriteFilm(id));
+    await dispatch(loadListFavotites());
   }
 
-  // Получает текущий фильм в списке избранных
-  function getFavoriteById() {
-    return listFavoriteFilms.find((item) => item.id === (+id));
-  }
+  const listFavoriteFilms = useSelector(getListFavoriteFilms);
+  const statusAuth = useSelector(getStatus);
 
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+  const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
+
+
+  if (statusAuth !== AuthorizationStatus.AUTH) {
     return (
       <Link
         to={AppRoute.LOGIN}
@@ -43,7 +46,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
   if(getFavoriteById()) {
     return (
       <button
-        onClick={() => deleteFavorite()}
+        onClick={deleteFavorite}
         className="btn btn--list film-card__button"
         type="button"
       >
@@ -54,7 +57,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
 
   return (
     <button
-      onClick={() => addFavorite()}
+      onClick={addFavorite}
       className="btn btn--list film-card__button"
       type="button"
     >
@@ -64,26 +67,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
 }
 
 BtnMyList.propTypes = {
-  listFavoriteFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
   id: PropTypes.number.isRequired,
-  addToFavoriteFilm: PropTypes.func.isRequired,
-  deleteToFavoriteFilm: PropTypes.func.isRequired,
-  getListFavotites: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addToFavoriteFilm: (id) => dispatch(addFavoriteFilm(id)),
-  deleteToFavoriteFilm: (id) => dispatch(deleteFavoriteFilm(id)),
-  getListFavotites: () => dispatch(loadListFavotites()),
-});
-
-const mapStateToProps = (state) => ({
-  listFavoriteFilms: state.listFavoriteFilms,
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {BtnMyList};
-export default connect(mapStateToProps, mapDispatchToProps)(BtnMyList);
+export default BtnMyList;

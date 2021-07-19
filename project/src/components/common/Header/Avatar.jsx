@@ -1,19 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { logout } from '../../../store/actions';
+import {getStatus, getUserAvatar, getUserEmail} from '../../../store/user/selectors';
 
-function Avatar({avatar, email, authorizationStatus, onLogout}) {
+function Avatar() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handlerLogout = (evt) => {
-    evt.preventDefault();
-    onLogout();
-  };
+  const handlerLogout = React.useCallback((e) => {
+    e.preventDefault();
+    dispatch(logout());
+  },[dispatch]);
+
+  const redirect = React.useCallback((e) => {
+    e.preventDefault();
+
+    history.push(AppRoute.MYLIST);
+  },[history]);
+
+  const authStatus = useSelector(getStatus);
+  const avatar = useSelector(getUserAvatar);
+  const email = useSelector(getUserEmail);
 
   return (
     <ul className="user-block">
@@ -24,12 +35,12 @@ function Avatar({avatar, email, authorizationStatus, onLogout}) {
             alt="User avatar"
             width="63"
             height="63"
-            onClick={() => history.push(AppRoute.MYLIST)}
+            onClick={redirect}
           />
         </div>
       </li>
       <li className="user-block__item">
-        {authorizationStatus === AuthorizationStatus.AUTH
+        {authStatus === AuthorizationStatus.AUTH
           ? (
             <>
               <span onClick={handlerLogout} className="user-block__link"><br/>Sign out</span>
@@ -42,24 +53,5 @@ function Avatar({avatar, email, authorizationStatus, onLogout}) {
   );
 }
 
-Avatar.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  avatar: state.avatarImg,
-  email: state.email,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogout: () => dispatch(logout()),
-});
-
-export {Avatar};
-export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
-
-
+export default Avatar;
+// Почему данный компонент не рендерится заново, в то время как Logo рендерится, если не использовать React.memo()

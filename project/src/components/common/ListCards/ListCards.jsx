@@ -5,7 +5,6 @@ import Card from '../Card/Card';
 import filmProp from '../../App/film.prop';
 
 function ListCards({ listFilms }) {
-
   return (
     <div className="catalog__films-list">
       {listFilms.map((card) => (

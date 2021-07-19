@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import {loadListFilms} from '../../../store/actions';
-import filmProp from '../../App/film.prop';
+import {getListFilms} from '../../../store/film-data/selectors';
 
-function Player({ match, listFilms, getListFilms  }) {
+function Player({ match  }) {
+
+  const listFilms = useSelector(getListFilms);
   const id = +match.params.id;
   const film = listFilms[id - 1] ;
 
@@ -46,24 +47,8 @@ function Player({ match, listFilms, getListFilms  }) {
 }
 
 Player.propTypes = {
-  listFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
   match: PropTypes.object.isRequired,
-  // isDataActiveFilmLoaded: PropTypes.bool.isRequired,
-  getListFilms: PropTypes.func.isRequired,
-
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getListFilms: () => dispatch(loadListFilms()),
-});
-
-const mapStateToProps = (state) => ({
-  listFilms: state.listFilms,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
-});
-
-export {Player};
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default Player;
 

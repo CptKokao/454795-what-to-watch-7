@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../../store/actions';
-
+import {changeGenre} from '../../../store/actions';
+import {getLimitFilms, getGenreFilm} from '../../../store/film-data/selectors';
 import ListCards from '../../common/ListCards/ListCards';
 import LoadMore from '../../common/LoadMore/LoadMore';
 import filmProp from '../../App/film.prop';
 
-function ListGenres({genres, limit, listFilms, getChangedGenres}) {
+function ListGenres({listFilms}) {
+  const dispatch = useDispatch();
+  const genre = useSelector(getGenreFilm);
+  const limit = useSelector(getLimitFilms);
 
   // Список уникальных жанров
   const listGenres= [...new Set(listFilms.map((item) => item.genre))];
@@ -16,14 +19,20 @@ function ListGenres({genres, limit, listFilms, getChangedGenres}) {
   listGenres.unshift('All genres');
 
   // Список фильмов для выбранного жанра
-  const filmsByGenre = genres !== 'All genres' ? listFilms.filter((item) => item.genre === genres) : listFilms;
+  const filmsByGenre = genre !== 'All genres' ? listFilms.filter((item) => item.genre === genre) : listFilms;
+
+  function getChangedGenre(e) {
+    if (e.target.className === 'catalog__genres-link') {
+      dispatch(changeGenre(e.target.innerText));
+    }
+  }
 
   return (
     <>
-      <ul className="catalog__genres-list" onClick={getChangedGenres}>
+      <ul className="catalog__genres-list" onClick={getChangedGenre}>
         {listGenres.map((item) => (
           <li
-            className={genres === item ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
+            className={genre === item ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
             key={item}
           >
             <a href="/#" className="catalog__genres-link">{item}</a>
@@ -44,26 +53,9 @@ function ListGenres({genres, limit, listFilms, getChangedGenres}) {
 }
 
 ListGenres.propTypes = {
-  genres: PropTypes.string.isRequired,
-  limit: PropTypes.number.isRequired,
   listFilms: PropTypes.arrayOf(
     filmProp,
   ),
-  getChangedGenres: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getChangedGenres(e) {
-    if (e.target.className === 'catalog__genres-link') {
-      dispatch(ActionCreator.changeGenres(e.target.innerText));
-    }
-  },
-});
-
-const mapStateToProps = (state) => ({
-  genres: state.genres,
-  limit: state.limit,
-});
-
-export {ListGenres};
-export default connect(mapStateToProps, mapDispatchToProps)(ListGenres);
+export default ListGenres;

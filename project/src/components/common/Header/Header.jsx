@@ -4,14 +4,13 @@ import Avatar from './Avatar';
 import Logo from './Logo';
 
 function Header() {
-
   return (
     <header className="page-header film-card__head">
       <Logo/>
 
-      <Avatar />
+      <Avatar/>
     </header>
   );
 }
 
-export default Header;
+export default React.memo(Header);

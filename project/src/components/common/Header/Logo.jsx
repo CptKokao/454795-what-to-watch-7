@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 
 function Logo() {
-
   return (
     <div className="logo">
       <Link to={AppRoute.MAIN} className="logo__link">
@@ -16,4 +15,4 @@ function Logo() {
   );
 }
 
-export default Logo;
+export default React.memo(Logo);

@@ -1,20 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {loadPromoFilm, loadListFilms} from '../../../store/actions';
+import {loadPromoFilm, loadListFilms} from '../../../store/api-actions';
+import {getListPromoFilm, getListFilms, getIsDataPromoFilmLoaded} from '../../../store/film-data/selectors';
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
-import filmProp from '../../App/film.prop';
 import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import Loader from '../../common/Loader/Loader';
 
-function Main({ getListFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLoaded }) {
+function Main() {
+  const dispatch = useDispatch();
+
+  const promoFilm = useSelector(getListPromoFilm);
+  const isDataPromoFilmLoaded = useSelector(getIsDataPromoFilmLoaded);
+  const listFilms = useSelector(getListFilms);
+
   React.useEffect(() => {
-    getListFilms();
-    getPromoFilm();
-  }, [getListFilms, getPromoFilm]);
+    dispatch(loadListFilms());
+    dispatch(loadPromoFilm());
+  }, [dispatch]);
 
   if (!isDataPromoFilmLoaded) {
     return <Loader/>;
@@ -72,33 +77,4 @@ function Main({ getListFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFil
   );
 }
 
-Main.propTypes = {
-  listFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
-  promoFilm: filmProp,
-  isDataPromoFilmLoaded: PropTypes.bool.isRequired,
-  getListFilms: PropTypes.func.isRequired,
-  getPromoFilm: PropTypes.func.isRequired,
-};
-
-// Без defaultProps в консоли ошибка undefined
-Main.defaultProps = {
-  isDataPromoFilmLoaded: false,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  getListFilms: () => dispatch(loadListFilms()),
-  getPromoFilm: () => dispatch(loadPromoFilm()),
-});
-
-const mapStateToProps = (state) => ({
-  listFilms: state.listFilms,
-  promoFilm: state.promoFilm,
-  isDataPromoFilmLoaded: state.isDataPromoFilmLoaded,
-});
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
-
-
+export default Main;

@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import { AuthorizationStatus } from '../../../const';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {loadActiveFilm, loadSimilarFilms, addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions';
+import { AuthorizationStatus } from '../../../const';
+import {loadActiveFilm, loadSimilarFilms} from '../../../store/api-actions';
+import {getActiveFilm, getIsDataActiveFilmLoaded, getListSimilarFilms} from '../../../store/film-data/selectors';
+import {getStatus} from '../../../store/user/selectors';
 import {AppRoute} from '../../../const';
 import ListCards from '../../common/ListCards/ListCards';
 import Tabs from '../../common/Tabs/Tabs';
@@ -13,18 +15,23 @@ import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
 import Loader from '../../common/Loader/Loader';
 import BtnMyList from '../../common/BtnMyList/BtnMyList';
-import filmProp from '../../App/film.prop';
 
-function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarFilms, authorizationStatus, isDataActiveFilmLoaded }) {
+function Film({ match }) {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const activeFilm = useSelector(getActiveFilm);
+  const listSimilarFilms = useSelector(getListSimilarFilms);
+  const statusAuth = useSelector(getStatus);
+  const isDataActiveFilmLoaded = useSelector(getIsDataActiveFilmLoaded);
   const id = +match.params.id;
 
   React.useEffect(() => {
-    getActivetFilm(id)
+    dispatch(loadActiveFilm(id))
       .catch(() => history.push(AppRoute.NOTFOUND));
 
-    getSimilarFilms(id);
-  }, [getActivetFilm, getSimilarFilms, history, id]);
+    dispatch(loadSimilarFilms(id));
+  }, [dispatch, history, id]);
 
   if (!isDataActiveFilmLoaded) {
     return <Loader/>;
@@ -60,7 +67,7 @@ function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarF
 
                 <BtnMyList id={id} />
 
-                {authorizationStatus === AuthorizationStatus.AUTH && (
+                {statusAuth === AuthorizationStatus.AUTH && (
                   <Link to={`/films/${id}/add-review`} className="btn film-card__button">Add review</Link>
                 )}
               </div>
@@ -95,33 +102,7 @@ function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarF
 }
 
 Film.propTypes = {
-  activeFilm: filmProp,
-  listSimilarFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
   match: PropTypes.object.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  isDataActiveFilmLoaded: PropTypes.bool.isRequired,
-  getActivetFilm: PropTypes.func.isRequired,
-  getSimilarFilms: PropTypes.func.isRequired,
-
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getActivetFilm: (id) => dispatch(loadActiveFilm(id)),
-  getSimilarFilms: (id) => dispatch(loadSimilarFilms(id)),
-  addToFavoriteFilm: (id) => dispatch(addFavoriteFilm(id)),
-  deleteToFavoriteFilm: (id) => dispatch(deleteFavoriteFilm(id)),
-  getListFavotites: () => dispatch(loadListFavotites()),
-});
-
-const mapStateToProps = (state) => ({
-  activeFilm: state.activeFilm,
-  listSimilarFilms: state.listSimilarFilms,
-  authorizationStatus: state.authorizationStatus,
-  listFavoriteFilms: state.listFavoriteFilms,
-  isDataActiveFilmLoaded: state.isDataActiveFilmLoaded,
-});
-
-export {Film};
-export default connect(mapStateToProps, mapDispatchToProps)(Film);
+export default Film;
