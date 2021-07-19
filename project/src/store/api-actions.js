@@ -1,35 +1,39 @@
+import {createAction} from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { ActionType } from '../store/actions';
 
-export const getListFilms = (films) => ({
-  type: ActionType.LOAD_FILMS,
+export const ActionType = {
+  LOAD_FILMS: 'data/loadFilms',
+  LOAD_ACTIVE_FILM: 'data/loadFilmId',
+  LOAD_PROMO: 'data/loadPromo',
+  LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
+  LOAD_REVIEWS: 'data/loadReviews',
+  LOAD_FAVORITES: 'data/loadFavoriteFilm',
+};
+
+export const getListFilms = createAction(ActionType.LOAD_FILMS, (films) => ({
   payload: films,
-});
+}));
 
-export const getActiveFilm = (film) => ({
-  type: ActionType.LOAD_ACTIVE_FILM,
+export const getActiveFilm = createAction(ActionType.LOAD_ACTIVE_FILM, (film) => ({
   payload: film,
-});
+}));
 
-export const getSimilarFilms = (films) => ({
-  type: ActionType.LOAD_SIMILAR_FILMS,
+export const getSimilarFilms = createAction(ActionType.LOAD_SIMILAR_FILMS, (films) => ({
   payload: films,
-});
+}));
 
-export const getListReviews = (reviews) => ({
-  type: ActionType.LOAD_REVIEWS,
+export const getListReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews,
-});
+}));
 
-export const getListFavotites = (favorites) => ({
-  type: ActionType.LOAD_FAVORITES,
+export const getListFavotites = createAction(ActionType.LOAD_FAVORITES, (favorites) => ({
   payload: favorites,
-});
+}));
 
-export const getPromoFilm = (films) => ({
-  type: ActionType.LOAD_PROMO,
+export const getPromoFilm = createAction(ActionType.LOAD_PROMO, (films) => ({
   payload: films,
-});
+}));
+
 
 // Возвращает список фильмов
 export const loadListFilms = () => (dispatch, _getState, api) => (

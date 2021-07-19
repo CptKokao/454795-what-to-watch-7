@@ -1,3 +1,4 @@
+import {createAction} from '@reduxjs/toolkit';
 import {APIRoute, AuthorizationStatus} from '../const';
 
 export const ActionType = {
@@ -17,33 +18,26 @@ export const ActionType = {
 };
 
 
-export const changeGenre = (genre) => ({
-  type: ActionType.CHANGE_GENRE,
+export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => ({
   payload: genre,
-});
+}));
 
-export const changeLimit = () => ({
-  type: ActionType.CHANGE_LIMIT,
-});
+export const changeLimit = createAction(ActionType.CHANGE_LIMIT)
 
-export const changeAvatar = (avatar) => ({
-  type: ActionType.CHANGE_AVATAR,
+export const changeAvatar = createAction(ActionType.CHANGE_AVATAR, (avatar) => ({
   payload: avatar,
-});
+}));
 
-export const changeEmail = (email) => ({
-  type: ActionType.CHANGE_EMAIL,
+export const changeEmail = createAction(ActionType.CHANGE_EMAIL, (email) => ({
   payload: email,
-});
+}));
 
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRED_AUTHORIZATION,
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-});
+}));
 
-export const exitAuthorization = () => ({
-  type: ActionType.LOGOUT,
-});
+export const exitAuthorization = createAction(ActionType.LOGOUT);
+
 
 /*
   Login:
