@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {filmData} from './film-data';
-import {reviewData} from './review-data';
-import {user} from './user';
+import {filmData} from './film-data/film-data';
+import {reviewData} from './review-data/review-data';
+import {user} from './user/user';
 
 export const NameSpace = {
   FILM: 'FILM',

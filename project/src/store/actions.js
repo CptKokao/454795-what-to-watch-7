@@ -1,16 +1,24 @@
 import {APIRoute, AuthorizationStatus} from '../const';
 
 export const ActionType = {
-  CHANGE_GENRES: 'listGenres/changeGenres',
-  CHANGE_LIMIT: 'listGenres/changeLimit',
+  LOAD_FILMS: 'data/loadFilms',
+  LOAD_ACTIVE_FILM: 'data/loadFilmId',
+  LOAD_PROMO: 'data/loadPromo',
+  LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
+  LOAD_REVIEWS: 'data/loadReviews',
+  LOAD_FAVORITES: 'data/loadFavoriteFilm',
+
+  CHANGE_LIMIT: 'loadMore/changeLimit',
+  CHANGE_GENRE: 'listGenres/changeGenre',
   CHANGE_AVATAR: 'user/changeAvatar',
   CHANGE_EMAIL: 'user/changeEmail',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
 };
 
-export const changeGenres = (genre) => ({
-  type: ActionType.CHANGE_GENRES,
+
+export const changeGenre = (genre) => ({
+  type: ActionType.CHANGE_GENRE,
   payload: genre,
 });
 

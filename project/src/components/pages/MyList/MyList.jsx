@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {loadListFavotites} from '../../../store/api-actions';
+import {getListFavoriteFilms, getIsDataFavoriteFilmsLoaded} from '../../../store/film-data/selectors';
 import ListCards from '../../common/ListCards/ListCards';
 import Logo from '../../common/Header/Logo';
 import Footer from '../../common/Footer/Footer';
@@ -19,7 +20,6 @@ function MyList({ getListFavotites, listFavoriteFilms, isFavoriteFilmsLoaded }) 
   if (!isFavoriteFilmsLoaded) {
     return <Loader/>;
   }
-
 
   return (
     <div className="user-page">
@@ -52,9 +52,9 @@ MyList.propTypes = {
   isFavoriteFilmsLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({FILM}) => ({
-  listFavoriteFilms: FILM.listFavoriteFilms,
-  isFavoriteFilmsLoaded: FILM.isFavoriteFilmsLoaded,
+const mapStateToProps = (state) => ({
+  listFavoriteFilms: getListFavoriteFilms(state),
+  isFavoriteFilmsLoaded: getIsDataFavoriteFilmsLoaded(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

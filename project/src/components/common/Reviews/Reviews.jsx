@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {loadListReviews} from '../../../store/api-actions';
+import {getListReviews, getIsDataReviewsLoaded} from '../../../store/review-data/selectors';
+
 import Loader from '../../../components/common/Loader/Loader';
 
 function Reviews({ id, getReviews, listReviews, isDataReviewsLoaded }) {
@@ -48,9 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
   getReviews: (id) => dispatch(loadListReviews(id)),
 });
 
-const mapStateToProps = ({REVIEW}) => ({
-  listReviews: REVIEW.listReviews,
-  isDataReviewsLoaded: REVIEW.isDataReviewsLoaded,
+const mapStateToProps = (state) => ({
+  listReviews: getListReviews(state),
+  isDataReviewsLoaded: getIsDataReviewsLoaded(state),
 });
 
 export {Reviews};

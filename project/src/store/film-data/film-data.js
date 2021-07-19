@@ -2,6 +2,8 @@ import { ActionType } from '../actions';
 import { adapterToClient } from '../../services/adapter';
 
 const initialState = {
+  genre: 'All genres',
+  limit: 8,
   listFilms: [],
   listSimilarFilms: [],
   listFavoriteFilms: [],
@@ -10,7 +12,7 @@ const initialState = {
   isDataFilmsLoaded: false,
   isDataPromoFilmLoaded: false,
   isDataActiveFilmLoaded: false,
-  isFavoriteFilmsLoaded: false,
+  isDataFavoriteFilmsLoaded: false,
 };
 
 const filmData = (state = initialState, action) => {
@@ -47,17 +49,18 @@ const filmData = (state = initialState, action) => {
       return {
         ...state,
         listFavoriteFilms: action.payload.map((item) => adapterToClient(item)),
-        isFavoriteFilmsLoaded: true,
+        isDataFavoriteFilmsLoaded: true,
       };
 
-    case ActionType.CHANGE_GENRES:
+    case ActionType.CHANGE_GENRE:
       return {
         ...state,
-        genres: action.payload,
+        genre: action.payload,
         limit: 8,
       };
 
     case ActionType.CHANGE_LIMIT:
+      console.log('limit')
       return {
         ...state,
         limit: state.limit + 8,

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {loadPromoFilm, loadListFilms} from '../../../store/api-actions';
+import {getListPromoFilm, getListFilms, getIsDataPromoFilmLoaded} from '../../../store/film-data/selectors';
+
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
@@ -10,12 +12,12 @@ import filmProp from '../../App/film.prop';
 import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import Loader from '../../common/Loader/Loader';
 
-function Main({ getListFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLoaded }) {
+function Main({ loadFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLoaded }) {
 
   React.useEffect(() => {
-    getListFilms();
+    loadFilms();
     getPromoFilm();
-  }, [getListFilms, getPromoFilm]);
+  }, [loadFilms, getPromoFilm]);
 
   if (!isDataPromoFilmLoaded) {
     return <Loader/>;
@@ -79,7 +81,7 @@ Main.propTypes = {
   ),
   promoFilm: filmProp,
   isDataPromoFilmLoaded: PropTypes.bool.isRequired,
-  getListFilms: PropTypes.func.isRequired,
+  loadFilms: PropTypes.func.isRequired,
   getPromoFilm: PropTypes.func.isRequired,
 };
 
@@ -89,14 +91,14 @@ Main.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getListFilms: () => dispatch(loadListFilms()),
+  loadFilms: () => dispatch(loadListFilms()),
   getPromoFilm: () => dispatch(loadPromoFilm()),
 });
 
-const mapStateToProps = ({FILM}) => ({
-  listFilms: FILM.listFilms,
-  promoFilm: FILM.promoFilm,
-  isDataPromoFilmLoaded: FILM.isDataPromoFilmLoaded,
+const mapStateToProps = (state) => ({
+  promoFilm: getListPromoFilm(state),
+  isDataPromoFilmLoaded: getIsDataPromoFilmLoaded(state),
+  listFilms: getListFilms(state),
 });
 
 export {Main};

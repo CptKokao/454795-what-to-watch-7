@@ -6,8 +6,10 @@ import { AppRoute, AuthorizationStatus } from '../../../const';
 
 import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
 import filmProp from '../../App/film.prop';
+import {getStatus} from '../../../store/user/selectors';
+import {getListFavoriteFilms} from '../../../store/film-data/selectors';
 
-function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFilms, getListFavotites, authorizationStatus}) {
+function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFilms, getListFavotites, statusAuth}) {
 
   React.useEffect(() => {
     getListFavotites();
@@ -26,7 +28,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
 
   const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
 
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+  if (statusAuth !== AuthorizationStatus.AUTH) {
     return (
       <Link
         to={AppRoute.LOGIN}
@@ -68,7 +70,7 @@ BtnMyList.propTypes = {
   addToFavoriteFilm: PropTypes.func.isRequired,
   deleteToFavoriteFilm: PropTypes.func.isRequired,
   getListFavotites: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
+  statusAuth: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -77,9 +79,9 @@ const mapDispatchToProps = (dispatch) => ({
   getListFavotites: () => dispatch(loadListFavotites()),
 });
 
-const mapStateToProps = ({FILM}) => ({
-  listFavoriteFilms: FILM.listFavoriteFilms,
-  authorizationStatus: FILM.authorizationStatus,
+const mapStateToProps = (state) => ({
+  listFavoriteFilms: getListFavoriteFilms(state),
+  statusAuth: getStatus(state),
 });
 
 export {BtnMyList};

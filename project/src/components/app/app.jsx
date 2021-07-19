@@ -14,6 +14,7 @@ import NotFound from '../pages/NotFound/NotFound';
 import Loader from '../common/Loader/Loader';
 import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
 import { AuthorizationStatus, AppRoute } from '../../const';
+import {getStatus} from '../../store/user/selectors';
 
 const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;
@@ -24,7 +25,6 @@ function App({ statusAuth }) {
   }
 
   return (
-
     <BrowserRouter>
       <Switch>
         {/* / */}
@@ -90,7 +90,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  statusAuth: state.authorizationStatus,
+  statusAuth: getStatus(state),
 });
 
 export {App};

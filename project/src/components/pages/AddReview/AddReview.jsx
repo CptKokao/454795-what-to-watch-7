@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 import {loadActiveFilm} from '../../../store/api-actions';
+import {getActiveFilm, getIsDataActiveFilmLoaded} from '../../../store/film-data/selectors';
+
 import {AppRoute} from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';
 import filmProp from '../../App/film.prop';
@@ -78,9 +80,9 @@ const mapDispatchToProps = (dispatch) => ({
   getActivetFilm: (id) => dispatch(loadActiveFilm(id)),
 });
 
-const mapStateToProps = ({FILM}) => ({
-  activeFilm: FILM.activeFilm,
-  isDataActiveFilmLoaded: FILM.isDataActiveFilmLoaded,
+const mapStateToProps = (state) => ({
+  activeFilm: getActiveFilm(state),
+  isDataActiveFilmLoaded: getIsDataActiveFilmLoaded(state),
 });
 
 export {AddReview};

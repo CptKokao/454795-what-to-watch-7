@@ -6,6 +6,9 @@ import { AuthorizationStatus } from '../../../const';
 import {useHistory} from 'react-router-dom';
 
 import {loadActiveFilm, loadSimilarFilms, addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
+import {getActiveFilm, getIsDataActiveFilmLoaded, getListSimilarFilms, getListFavoriteFilms} from '../../../store/film-data/selectors';
+import {getStatus} from '../../../store/user/selectors';
+
 import {AppRoute} from '../../../const';
 import ListCards from '../../common/ListCards/ListCards';
 import Tabs from '../../common/Tabs/Tabs';
@@ -15,7 +18,7 @@ import Loader from '../../common/Loader/Loader';
 import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import filmProp from '../../App/film.prop';
 
-function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarFilms, authorizationStatus, isDataActiveFilmLoaded }) {
+function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarFilms, statusAuth, isDataActiveFilmLoaded }) {
   const history = useHistory();
   const id = +match.params.id;
 
@@ -60,7 +63,7 @@ function Film({ match, getActivetFilm, activeFilm, getSimilarFilms, listSimilarF
 
                 <BtnMyList id={id} />
 
-                {authorizationStatus === AuthorizationStatus.AUTH && (
+                {statusAuth === AuthorizationStatus.AUTH && (
                   <Link to={`/films/${id}/add-review`} className="btn film-card__button">Add review</Link>
                 )}
               </div>
@@ -100,7 +103,7 @@ Film.propTypes = {
     filmProp,
   ),
   match: PropTypes.object.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
+  statusAuth: PropTypes.string.isRequired,
   isDataActiveFilmLoaded: PropTypes.bool.isRequired,
   getActivetFilm: PropTypes.func.isRequired,
   getSimilarFilms: PropTypes.func.isRequired,
@@ -115,12 +118,12 @@ const mapDispatchToProps = (dispatch) => ({
   getListFavotites: () => dispatch(loadListFavotites()),
 });
 
-const mapStateToProps = ({FILM, USER}) => ({
-  activeFilm: FILM.activeFilm,
-  listSimilarFilms: FILM.listSimilarFilms,
-  authorizationStatus: USER.authorizationStatus,
-  listFavoriteFilms: FILM.listFavoriteFilms,
-  isDataActiveFilmLoaded: FILM.isDataActiveFilmLoaded,
+const mapStateToProps = (state) => ({
+  activeFilm: getActiveFilm(state),
+  listSimilarFilms: getListSimilarFilms(state),
+  statusAuth: getStatus(state),
+  listFavoriteFilms: getListFavoriteFilms(state),
+  isDataActiveFilmLoaded: getIsDataActiveFilmLoaded(state),
 });
 
 export {Film};

@@ -6,14 +6,21 @@ import {connect} from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { logout } from '../../../store/actions';
+import {getStatus, getUserAvatar, getUserEmail} from '../../../store/user/selectors';
 
 function Avatar({avatar, email, authorizationStatus, onLogout}) {
   const history = useHistory();
 
-  const handlerLogout = React.useCallback((evt) => {
-    evt.preventDefault();
+  const handlerLogout = React.useCallback((e) => {
+    e.preventDefault();
     onLogout();
   },[onLogout]);
+
+  const redirect = React.useCallback((e) => {
+    e.preventDefault();
+
+    history.push(AppRoute.MYLIST);
+  },[history]);
 
   return (
     <ul className="user-block">
@@ -24,7 +31,7 @@ function Avatar({avatar, email, authorizationStatus, onLogout}) {
             alt="User avatar"
             width="63"
             height="63"
-            onClick={() => history.push(AppRoute.MYLIST)}
+            onClick={redirect}
           />
         </div>
       </li>
@@ -49,10 +56,10 @@ Avatar.propTypes = {
   onLogout: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  avatar: USER.avatarImg,
-  email: USER.email,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getStatus(state),
+  avatar: getUserAvatar(state),
+  email: getUserEmail(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

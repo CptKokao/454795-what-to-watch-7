@@ -1,13 +1,5 @@
 import { APIRoute } from '../const';
-
-export const ActionType = {
-  LOAD_FILMS: 'data/loadFilms',
-  LOAD_ACTIVE_FILM: 'data/loadFilmId',
-  LOAD_PROMO: 'data/loadPromo',
-  LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
-  LOAD_REVIEWS: 'data/loadReviews',
-  LOAD_FAVORITES: 'data/loadFavoriteFilm',
-};
+import { ActionType } from '../store/actions';
 
 export const getListFilms = (films) => ({
   type: ActionType.LOAD_FILMS,
