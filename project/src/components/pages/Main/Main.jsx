@@ -1,23 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {loadPromoFilm, loadListFilms} from '../../../store/api-actions';
 import {getListPromoFilm, getListFilms, getIsDataPromoFilmLoaded} from '../../../store/film-data/selectors';
-
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
-import filmProp from '../../App/film.prop';
 import BtnMyList from '../../common/BtnMyList/BtnMyList';
 import Loader from '../../common/Loader/Loader';
 
-function Main({ loadFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLoaded }) {
+function Main() {
+  const dispatch = useDispatch();
+
+  const promoFilm = useSelector(getListPromoFilm);
+  const isDataPromoFilmLoaded = useSelector(getIsDataPromoFilmLoaded);
+  const listFilms = useSelector(getListFilms);
 
   React.useEffect(() => {
-    loadFilms();
-    getPromoFilm();
-  }, [loadFilms, getPromoFilm]);
+    dispatch(loadListFilms());
+    dispatch(loadPromoFilm());
+  }, [dispatch]);
 
   if (!isDataPromoFilmLoaded) {
     return <Loader/>;
@@ -75,33 +77,4 @@ function Main({ loadFilms, getPromoFilm, promoFilm, listFilms, isDataPromoFilmLo
   );
 }
 
-Main.propTypes = {
-  listFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
-  promoFilm: filmProp,
-  isDataPromoFilmLoaded: PropTypes.bool.isRequired,
-  loadFilms: PropTypes.func.isRequired,
-  getPromoFilm: PropTypes.func.isRequired,
-};
-
-// Без defaultProps в консоли ошибка undefined
-Main.defaultProps = {
-  isDataPromoFilmLoaded: false,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  loadFilms: () => dispatch(loadListFilms()),
-  getPromoFilm: () => dispatch(loadPromoFilm()),
-});
-
-const mapStateToProps = (state) => ({
-  promoFilm: getListPromoFilm(state),
-  isDataPromoFilmLoaded: getIsDataPromoFilmLoaded(state),
-  listFilms: getListFilms(state),
-});
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
-
-
+export default Main;

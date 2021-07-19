@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from '../pages/Main/Main';
@@ -19,7 +18,10 @@ import {getStatus} from '../../store/user/selectors';
 const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;
 
-function App({ statusAuth }) {
+function App() {
+
+  const statusAuth = useSelector(getStatus);
+
   if (isUserGuest(statusAuth)) {
     return <Loader/>;
   }
@@ -85,13 +87,5 @@ function App({ statusAuth }) {
   );
 }
 
-App.propTypes = {
-  statusAuth: PropTypes.string.isRequired,
-};
+export default App;
 
-const mapStateToProps = (state) => ({
-  statusAuth: getStatus(state),
-});
-
-export {App};
-export default connect(mapStateToProps)(App);

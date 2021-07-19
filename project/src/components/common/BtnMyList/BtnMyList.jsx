@@ -1,32 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 
 import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
-import filmProp from '../../App/film.prop';
 import {getStatus} from '../../../store/user/selectors';
 import {getListFavoriteFilms} from '../../../store/film-data/selectors';
 
-function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFilms, getListFavotites, statusAuth}) {
+function BtnMyList({id}) {
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getListFavotites();
-  }, [getListFavotites]);
+    dispatch(loadListFavotites());
+  }, [dispatch]);
 
   // Сейчас работает корректно
   async function addFavorite() {
-    await addToFavoriteFilm(id);
-    await getListFavotites();
+    await dispatch(addFavoriteFilm(id));
+    await dispatch(loadListFavotites());
   }
 
   async function deleteFavorite() {
-    await deleteToFavoriteFilm(id);
-    await getListFavotites();
+    await dispatch(deleteFavoriteFilm(id));
+    await dispatch(loadListFavotites());
   }
 
+  const listFavoriteFilms = useSelector(getListFavoriteFilms);
+  const statusAuth = useSelector(getStatus);
+
   const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
+
 
   if (statusAuth !== AuthorizationStatus.AUTH) {
     return (
@@ -63,26 +67,7 @@ function BtnMyList({id, addToFavoriteFilm, deleteToFavoriteFilm, listFavoriteFil
 }
 
 BtnMyList.propTypes = {
-  listFavoriteFilms: PropTypes.arrayOf(
-    filmProp,
-  ),
   id: PropTypes.number.isRequired,
-  addToFavoriteFilm: PropTypes.func.isRequired,
-  deleteToFavoriteFilm: PropTypes.func.isRequired,
-  getListFavotites: PropTypes.func.isRequired,
-  statusAuth: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addToFavoriteFilm: (id) => dispatch(addFavoriteFilm(id)),
-  deleteToFavoriteFilm: (id) => dispatch(deleteFavoriteFilm(id)),
-  getListFavotites: () => dispatch(loadListFavotites()),
-});
-
-const mapStateToProps = (state) => ({
-  listFavoriteFilms: getListFavoriteFilms(state),
-  statusAuth: getStatus(state),
-});
-
-export {BtnMyList};
-export default connect(mapStateToProps, mapDispatchToProps)(BtnMyList);
+export default BtnMyList;

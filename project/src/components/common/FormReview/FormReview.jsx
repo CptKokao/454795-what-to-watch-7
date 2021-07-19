@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 import { addReview } from '../../../store/api-actions';
 import {APIRoute} from '../../../const';
 
-function FormReview({ onSubmit, id }) {
+function FormReview({ id }) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [rating, setRating] = React.useState(1);
   const [review, setReview] = React.useState('');
@@ -37,13 +38,13 @@ function FormReview({ onSubmit, id }) {
   const handleSubmit = React.useCallback((e) => {
     e.preventDefault();
 
-    onSubmit({
+    dispatch(addReview({
       rating: rating,
       comment: review,
       id: id,
-    })
+    }))
       .then(() => history.push(`${APIRoute.FILMS}/${id}`));
-  }, [history, id, onSubmit, rating, review]);
+  }, [dispatch, history, id, rating, review]);
 
 
   return (
@@ -94,20 +95,12 @@ function FormReview({ onSubmit, id }) {
           </div>
         </div>
       </form>
-
-      {review}
     </div>
   );
 }
 
 FormReview.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (authData, id) => dispatch(addReview(authData, id)),
-});
-
-export {FormReview};
-export default connect(null, mapDispatchToProps)(FormReview);
+export default FormReview;

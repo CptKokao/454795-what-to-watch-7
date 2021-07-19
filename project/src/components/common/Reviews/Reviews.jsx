@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {loadListReviews} from '../../../store/api-actions';
 import {getListReviews, getIsDataReviewsLoaded} from '../../../store/review-data/selectors';
-
 import Loader from '../../../components/common/Loader/Loader';
 
-function Reviews({ id, getReviews, listReviews, isDataReviewsLoaded }) {
+function Reviews({ id }) {
+  const dispatch = useDispatch();
+  const listReviews = useSelector(getListReviews);
+  const isDataReviewsLoaded = useSelector(getIsDataReviewsLoaded);
 
   React.useEffect(() => {
-    getReviews(id);
-  }, [getReviews, id]);
+    dispatch(loadListReviews(id));
+  }, [dispatch, id]);
 
   if (!isDataReviewsLoaded) {
     return <Loader/>;
@@ -40,20 +42,7 @@ function Reviews({ id, getReviews, listReviews, isDataReviewsLoaded }) {
 }
 
 Reviews.propTypes = {
-  listReviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   id: PropTypes.number.isRequired,
-  getReviews: PropTypes.func.isRequired,
-  isDataReviewsLoaded: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  getReviews: (id) => dispatch(loadListReviews(id)),
-});
-
-const mapStateToProps = (state) => ({
-  listReviews: getListReviews(state),
-  isDataReviewsLoaded: getIsDataReviewsLoaded(state),
-});
-
-export {Reviews};
-export default connect(mapStateToProps, mapDispatchToProps)(Reviews);
+export default Reviews;
