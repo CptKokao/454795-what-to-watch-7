@@ -44,13 +44,17 @@ function Player({match}) {
   // Событие по нажатию на кнопку Pause
   const onPause = React.useCallback(() => {
     setPlay(false);
-    videoElement.current.pause();
+    if (videoElement.current) {
+      videoElement.current.pause();
+    }
     clearInterval(interval);
   }, [interval]);
 
   // Событие по нажатию на кнопку Fullscreen
   const onFullscreen = React.useCallback(() => {
-    videoElement.current.requestFullscreen();
+    if (videoElement.current) {
+      videoElement.current.requestFullscreen();
+    }
   },[]);
 
   // Преобразует время в нужный формат
@@ -92,8 +96,6 @@ function Player({match}) {
   React.useEffect(() => {
     dispatch(loadActiveFilm(id))
       .catch(() => history.push(AppRoute.NOTFOUND));
-
-    dispatch(loadSimilarFilms(id));
   }, [dispatch, history, id]);
 
   if (!isDataActiveFilmLoaded) {
