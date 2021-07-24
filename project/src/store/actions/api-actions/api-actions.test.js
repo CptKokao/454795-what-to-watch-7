@@ -12,7 +12,7 @@ import {
   deleteFavoriteFilm,
   addReview
 } from './api-actions';
-import {APIRoute} from '../const';
+import {APIRoute} from '../../../const';
 
 let api = null;
 

@@ -1,5 +1,5 @@
 import {user} from './user';
-import {ActionType} from '../actions';
+import {ActionType} from '../../actions/actions/actions';
 import {AuthorizationStatus} from '../../../const';
 
 describe('Reducer: user', () => {
