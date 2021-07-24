@@ -6,7 +6,7 @@ import {changeGenre} from '../../../store/actions/actions/actions';
 import {getLimitFilms, getGenreFilm} from '../../../store/reducer/film-data/selectors';
 import ListCards from '../../common/ListCards/ListCards';
 import LoadMore from '../../common/LoadMore/LoadMore';
-import filmProp from '../../App/film.prop';
+import filmProp from '../../app/film.prop';
 
 function ListGenres({listFilms}) {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {AuthorizationStatus, AppRoute} from '../../const';
-import App from './App';
+import App from './app';
 
 let history = null;
 let store = null;

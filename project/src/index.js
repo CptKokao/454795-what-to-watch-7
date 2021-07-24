@@ -9,7 +9,7 @@ import {requireAuthorization} from './store/actions/actions/actions';
 import {checkAuth} from './store/actions/api-user-actions/api-user-actions';
 import {createAPI} from './services/api';
 import {AuthorizationStatus} from './const';
-import App from './components/App/App';
+import App from './components/app/app';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
