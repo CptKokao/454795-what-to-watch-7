@@ -1,5 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../../services/api';
+import {APIRoute} from '../../../const';
 import {ActionType} from '../actions/actions';
 import {
   loadListFilms,
@@ -12,7 +13,6 @@ import {
   deleteFavoriteFilm,
   addReview
 } from './api-actions';
-import {APIRoute} from '../../../const';
 
 let api = null;
 
