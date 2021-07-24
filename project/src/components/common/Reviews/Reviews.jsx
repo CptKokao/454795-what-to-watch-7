@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {loadListReviews} from '../../../store/api-actions';
-import {getListReviews, getIsDataReviewsLoaded} from '../../../store/review-data/selectors';
+import {loadListReviews} from '../../../store/actions/api-actions/api-actions';
+import {getListReviews, getIsDataReviewsLoaded} from '../../../store/reducer/review-data/selectors';
 import Loader from '../../../components/common/Loader/Loader';
 
 function Reviews({ id }) {

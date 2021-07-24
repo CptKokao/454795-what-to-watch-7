@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 import {AppRoute} from '../../../const';
-import {getIsDataActiveFilmLoaded, getActiveFilm} from '../../../store/film-data/selectors';
-import {loadActiveFilm} from '../../../store/api-actions';
+import {getIsDataActiveFilmLoaded, getActiveFilm} from '../../../store/reducer/film-data/selectors';
+import {loadActiveFilm} from '../../../store/actions/api-actions/api-actions';
 import Loader from '../../common/Loader/Loader';
 
 function Player({match}) {

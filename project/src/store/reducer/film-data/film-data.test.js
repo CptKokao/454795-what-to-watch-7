@@ -1,5 +1,5 @@
 import {filmData} from './film-data';
-import {ActionType} from '../actions';
+import {ActionType} from '../../actions/actions/actions';
 
 describe('Reducer: user', () => {
   it('without additional parameters should return initial state', () => {

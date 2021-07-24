@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {changeGenre} from '../../../store/actions';
-import {getLimitFilms, getGenreFilm} from '../../../store/film-data/selectors';
+import {changeGenre} from '../../../store/actions/actions/actions';
+import {getLimitFilms, getGenreFilm} from '../../../store/reducer/film-data/selectors';
 import ListCards from '../../common/ListCards/ListCards';
 import LoadMore from '../../common/LoadMore/LoadMore';
 import filmProp from '../../App/film.prop';

@@ -6,7 +6,7 @@ import {
   ActionType
 } from './actions';
 
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../../../const';
 
 describe('Actions', () => {
   // Как здесь проверить, что меняется limit?

@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
-import {createAPI} from '../services/api';
-import {ActionType} from './actions';
+import {createAPI} from '../../../services/api';
+import {ActionType} from '../actions/actions';
 import {
   loadListFilms,
   loadActiveFilm,

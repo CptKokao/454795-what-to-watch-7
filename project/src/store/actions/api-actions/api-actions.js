@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
-import { APIRoute } from '../const';
-import { ActionType } from './actions';
+import { APIRoute } from '../../../const';
+import { ActionType } from '../actions/actions';
 
 export const getListFilms = createAction(ActionType.LOAD_FILMS, (films) => ({
   payload: films,
@@ -55,7 +55,6 @@ export const loadListReviews = (id) => (dispatch, _getState, api) => (
 
 // Возвращает списиок добавленных фильмов MyList
 export const loadListFavotites = () => (dispatch, _getState, api) => (
-
   api.get(APIRoute.FAVORITE)
     .then(({data}) => dispatch(getListFavotites(data)))
     .catch(() => {})

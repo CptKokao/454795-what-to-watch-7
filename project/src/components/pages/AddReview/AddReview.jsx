@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {loadActiveFilm} from '../../../store/api-actions';
-import {getActiveFilm, getIsDataActiveFilmLoaded} from '../../../store/film-data/selectors';
+import {loadActiveFilm} from '../../../store/actions/api-actions/api-actions';
+import {getActiveFilm, getIsDataActiveFilmLoaded} from '../../../store/reducer/film-data/selectors';
 
 import {AppRoute} from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';

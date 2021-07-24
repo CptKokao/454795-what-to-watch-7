@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {getListReviews} from '../api-actions';
+import {getListReviews} from '../../actions/api-actions/api-actions';
 
 const initialState = {
   listReviews: [],

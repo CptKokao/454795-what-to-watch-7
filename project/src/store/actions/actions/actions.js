@@ -34,4 +34,3 @@ export const changeEmail = createAction(ActionType.CHANGE_EMAIL, (email) => ({
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
 }));
-

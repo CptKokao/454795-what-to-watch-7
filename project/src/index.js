@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import rootReducer from './store/root-reducer';
+import rootReducer from './store/reducer/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 
-import {requireAuthorization} from './store/actions';
-import {checkAuth} from './store/api-user-actions';
+import {requireAuthorization} from './store/actions/actions/actions';
+import {checkAuth} from './store/actions/api-user-actions/api-user-actions';
 import {createAPI} from './services/api';
 import {AuthorizationStatus} from './const';
 import App from './components/App/app';

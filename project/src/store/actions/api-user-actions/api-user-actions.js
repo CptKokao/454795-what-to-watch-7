@@ -1,5 +1,5 @@
-import { APIRoute, AuthorizationStatus } from '../const';
-import { requireAuthorization, changeAvatar, changeEmail } from './actions';
+import { APIRoute, AuthorizationStatus } from '../../../const';
+import { requireAuthorization, changeAvatar, changeEmail } from '../actions/actions';
 
 /*
   Login:

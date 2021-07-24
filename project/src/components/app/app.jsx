@@ -13,7 +13,7 @@ import NotFound from '../pages/NotFound/NotFound';
 import Loader from '../common/Loader/Loader';
 import PrivateRoute from '../common/PrivateRoute/PrivateRoute';
 import { AuthorizationStatus, AppRoute } from '../../const';
-import {getStatus} from '../../store/user/selectors';
+import {getStatus} from '../../store/reducer/user/selectors';
 
 const isUserGuest = (status) =>
   status === AuthorizationStatus.UNKNOWN;

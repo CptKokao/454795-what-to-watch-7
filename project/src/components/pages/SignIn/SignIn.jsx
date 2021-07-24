@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import { login } from '../../../store/api-user-actions';
+import { login } from '../../../store/actions/api-user-actions/api-user-actions';
 import Footer from '../../common/Footer/Footer';
 import Logo from '../../common/Header/Logo';
 
