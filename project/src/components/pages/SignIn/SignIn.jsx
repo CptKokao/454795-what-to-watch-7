@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
 import { AppRoute } from '../../../const';
-import { login } from '../../../store/actions';
+import { login } from '../../../store/api-user-actions';
 import Footer from '../../common/Footer/Footer';
 
 function SignIn() {

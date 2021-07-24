@@ -1,14 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-
-export const ActionType = {
-  LOAD_FILMS: 'data/loadFilms',
-  LOAD_ACTIVE_FILM: 'data/loadFilmId',
-  LOAD_PROMO: 'data/loadPromo',
-  LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
-  LOAD_REVIEWS: 'data/loadReviews',
-  LOAD_FAVORITES: 'data/loadFavoriteFilm',
-};
+import { ActionType } from './actions';
 
 export const getListFilms = createAction(ActionType.LOAD_FILMS, (films) => ({
   payload: films,
@@ -34,18 +26,10 @@ export const getPromoFilm = createAction(ActionType.LOAD_PROMO, (films) => ({
   payload: films,
 }));
 
-
 // Возвращает список фильмов
 export const loadListFilms = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
     .then(({data}) => dispatch(getListFilms(data)))
-    .catch(() => {})
-);
-
-// Возвращает промо фильм
-export const loadPromoFilm = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.PROMO)
-    .then(({data}) => dispatch(getPromoFilm(data)))
     .catch(() => {})
 );
 
@@ -76,6 +60,14 @@ export const loadListFavotites = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(getListFavotites(data)))
     .catch(() => {})
 );
+
+// Возвращает промо фильм
+export const loadPromoFilm = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PROMO)
+    .then(({data}) => dispatch(getPromoFilm(data)))
+    .catch(() => {})
+);
+
 
 // Добавляет фильм в MyList
 export const addFavoriteFilm = (id) => (dispatch, _getState, api) => (

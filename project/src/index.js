@@ -4,7 +4,8 @@ import {Provider} from 'react-redux';
 import rootReducer from './store/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 
-import {checkAuth, requireAuthorization} from './store/actions';
+import {requireAuthorization} from './store/actions';
+import {checkAuth} from './store/api-user-actions';
 import {createAPI} from './services/api';
 import {AuthorizationStatus} from './const';
 import App from './components/App/app';

@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
-import { logout } from '../../../store/actions';
+import { logout } from '../../../store/api-user-actions';
 import {getStatus, getUserAvatar, getUserEmail} from '../../../store/user/selectors';
 
 function Avatar() {
