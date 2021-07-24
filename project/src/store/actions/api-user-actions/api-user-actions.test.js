@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../services/api';
 import {ActionType} from './actions';
 import {checkAuth, login, logout} from './api-user-actions';
-import {loadListFilms} from '../api-actions/api-actions';
+// import {loadListFilms} from '../api-actions/api-actions';
 import {APIRoute, AuthorizationStatus} from '../../const';
 
 let api = null;
