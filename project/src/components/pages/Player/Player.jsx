@@ -5,7 +5,7 @@ import {useHistory} from 'react-router-dom';
 
 import {AppRoute} from '../../../const';
 import {getIsDataActiveFilmLoaded, getActiveFilm} from '../../../store/film-data/selectors';
-import {loadActiveFilm, loadSimilarFilms} from '../../../store/api-actions';
+import {loadActiveFilm} from '../../../store/api-actions';
 import Loader from '../../common/Loader/Loader';
 
 function Player({match}) {
