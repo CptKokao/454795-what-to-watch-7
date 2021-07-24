@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import { AppRoute } from '../../../const';
 import { login } from '../../../store/api-user-actions';
 import Footer from '../../common/Footer/Footer';
+import Logo from '../../common/Header/Logo';
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -23,13 +22,7 @@ function SignIn() {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <div className="logo">
-          <Link to={AppRoute.MAIN} className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
+        <Logo />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -51,6 +44,7 @@ function SignIn() {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                data-testid="login"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -64,6 +58,7 @@ function SignIn() {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                data-testid="password"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
