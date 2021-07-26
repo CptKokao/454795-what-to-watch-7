@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import {changeLimit} from '../../../store/actions';
+import {changeLimit} from '../../../store/actions/actions/actions';
 
 function LoadMore() {
   const dispatch = useDispatch();

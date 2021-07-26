@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Overview from '../../common/Overview/Overview';
 import Reviews from '../../common/Reviews/Reviews';
 import Details from '../../common/Details/Details';
-import filmProp from '../../App/film.prop';
+import filmProp from '../../app/film.prop';
 
 function Tabs({ activeFilm, id }) {
   const [ active, setActive ] = React.useState(0);

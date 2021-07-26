@@ -1,8 +1,8 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {loadListFavotites} from '../../../store/api-actions';
-import {getListFavoriteFilms, getIsDataFavoriteFilmsLoaded} from '../../../store/film-data/selectors';
+import {loadListFavotites} from '../../../store/actions/api-actions/api-actions';
+import {getListFavoriteFilms, getIsDataFavoriteFilmsLoaded} from '../../../store/reducer/film-data/selectors';
 import ListCards from '../../common/ListCards/ListCards';
 import Logo from '../../common/Header/Logo';
 import Footer from '../../common/Footer/Footer';

@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 
-import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/api-actions';
-import {getStatus} from '../../../store/user/selectors';
-import {getListFavoriteFilms} from '../../../store/film-data/selectors';
+import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions/api-actions/api-actions';
+import {getStatus} from '../../../store/reducer/user/selectors';
+import {getListFavoriteFilms} from '../../../store/reducer/film-data/selectors';
 
 function BtnMyList({id}) {
   const dispatch = useDispatch();

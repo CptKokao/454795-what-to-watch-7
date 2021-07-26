@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {getListFilms, getPromoFilm, getActiveFilm, getSimilarFilms, getListFavotites} from '../api-actions';
-import {changeGenre, changeLimit} from '../actions';
-import {adapterToClient} from '../../services/adapter';
+import {getListFilms, getPromoFilm, getActiveFilm, getSimilarFilms, getListFavotites} from '../../actions/api-actions/api-actions';
+import {changeGenre, changeLimit} from '../../actions/actions/actions';
+import {adapterToClient} from '../../../services/adapter';
 
 const initialState = {
   genre: 'All genres',

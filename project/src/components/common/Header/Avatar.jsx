@@ -4,8 +4,8 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
-import { logout } from '../../../store/actions';
-import {getStatus, getUserAvatar, getUserEmail} from '../../../store/user/selectors';
+import { logout } from '../../../store/actions/api-user-actions/api-user-actions';
+import {getStatus, getUserAvatar, getUserEmail} from '../../../store/reducer/user/selectors';
 
 function Avatar() {
   const history = useHistory();

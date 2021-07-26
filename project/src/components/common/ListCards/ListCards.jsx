@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Card from '../Card/Card';
-import filmProp from '../../App/film.prop';
+import filmProp from '../../app/film.prop';
 
 function ListCards({ listFilms }) {
   return (

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import { addReview } from '../../../store/api-actions';
+import { addReview } from '../../../store/actions/api-actions/api-actions';
 import {APIRoute} from '../../../const';
 
 function FormReview({ id }) {
