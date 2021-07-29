@@ -67,7 +67,6 @@ export const loadPromoFilm = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-
 // Добавляет фильм в MyList
 export const addFavoriteFilm = (id) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${id}/1`)

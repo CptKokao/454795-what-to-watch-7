@@ -14,6 +14,7 @@ const initialState = {
   isDataFilmsLoaded: false,
   isDataPromoFilmLoaded: false,
   isDataActiveFilmLoaded: false,
+  isDataSimilarFilmLoaded: false,
   isDataFavoriteFilmsLoaded: false,
 };
 
@@ -37,6 +38,7 @@ const filmData = createReducer(initialState, (builder) => {
 
     .addCase(getSimilarFilms, (state, action) => {
       state.listSimilarFilms = action.payload.map((item) => adapterToClient(item));
+      state.isDataSimilarFilmLoaded = true;
     })
 
     .addCase(getListFavotites, (state, action) => {

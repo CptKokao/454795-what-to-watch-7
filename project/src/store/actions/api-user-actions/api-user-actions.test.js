@@ -2,7 +2,6 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../../services/api';
 import {ActionType} from '../actions/actions';
 import {checkAuth, login, logout} from '../api-user-actions/api-user-actions';
-// import {loadListFilms} from '../api-actions/api-actions';
 import {APIRoute, AuthorizationStatus} from '../../../const';
 
 let api = null;
@@ -12,8 +11,6 @@ describe('Async operations', () => {
     api = createAPI(() => {});
   });
 
-  // Тест не покрывает changeAvatar, changeEmail, там нужно ображение к localStorage
-  // это выполняется в следующем 9 задании
   it('should make a correct API call to GET /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
@@ -47,8 +44,6 @@ describe('Async operations', () => {
 
   });
 
-  // Тест не покрывает changeAvatar, changeEmail, там нужно ображение к localStorage
-  // это выполняется в следующем 9 задании
   it('should make a correct API call to POST /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
@@ -88,8 +83,6 @@ describe('Async operations', () => {
       });
   });
 
-  // Тест не покрывает удаление данных из localStorage
-  // это выполняется в следующем 9 задании
   it('should make a correct API call to DELETE /logout', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
