@@ -79,34 +79,4 @@ describe('Application Routing', () => {
     expect(headerElement).toBeInTheDocument();
     expect(linkElement).toBeInTheDocument();
   });
-
-  // Данные тесты выдает ошибку из-за UseEffect.
-  // Написание тестов для комопонентов с хуками, делается в следующем 9 задании.
-
-  // it('should render "Main" when user navigate to "/"', () => {
-  //   history.push(AppRoute.MAIN);
-  //   render(fakeApp);
-
-  //   // expect(screen.getByText(/WTW/i)).toBeInTheDocument();
-  // });
-
-  // it('should render "MyList" when user navigate to "/mylist"', () => {
-  //   history.push(AppRoute.MYLIST);
-  //   render(fakeApp);
-  // });
-
-  // it('should render "FILMS" when user navigate to "/films/:id"', () => {
-  //   history.push(AppRoute.FILMS);
-  //   render(fakeApp);
-  // });
-
-  // it('should render "ADDREVIEW" when user navigate to "/films/:id/add-review"', () => {
-  //   history.push(AppRoute.ADDREVIEW);
-  //   render(fakeApp);
-  // });
-
-  // it('should render "Player" when user navigate to "/player/:id"', () => {
-  //   history.push(AppRoute.PLAYER);
-  //   render(fakeApp);
-  // });
 });

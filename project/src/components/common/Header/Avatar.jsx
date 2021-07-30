@@ -54,4 +54,3 @@ function Avatar() {
 }
 
 export default Avatar;
-// Почему данный компонент не рендерится заново, в то время как Logo рендерится, если не использовать React.memo()
