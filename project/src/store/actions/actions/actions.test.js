@@ -9,7 +9,6 @@ import {
 import { AuthorizationStatus } from '../../../const';
 
 describe('Actions', () => {
-  // Как здесь проверить, что меняется limit?
   it('action creator for change genre return new genre', () => {
     const expectedAction = {
       type: ActionType.CHANGE_GENRE,
@@ -19,7 +18,6 @@ describe('Actions', () => {
     expect(changeGenre('drama')).toEqual(expectedAction);
   });
 
-  // Как здесь проверить, что меняется limit, прям чтобы на 8, не 7?
   it('action creator for change limit return change limit', () => {
     const expectedAction = {
       type: ActionType.CHANGE_LIMIT,
@@ -46,8 +44,6 @@ describe('Actions', () => {
     expect(changeAvatar('email')).toEqual(expectedAction);
   });
 
-  // Правильно здесь использовать константу AuthorizationStatus
-  // или можно просто строку передать, по аналогии с тестами выше
   it('action creator check authorization return status authorization', () => {
     const expectedAction = {
       type: ActionType.REQUIRED_AUTHORIZATION,
