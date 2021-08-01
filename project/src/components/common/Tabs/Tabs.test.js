@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import Tabs from './Tabs';
 
-const FILM = {
+const mockFilm = {
   id:1,
   name:'Pulp Fiction',
   posterImage:'https://7.react.pages.academy/static/film/poster/Pulp_Fiction.jpg',
@@ -31,7 +31,7 @@ describe('Component: Tabs', () => {
 
     render(
       <Router history={history}>
-        <Tabs activeFilm={FILM} id={0}/>
+        <Tabs activeFilm={mockFilm} id={0}/>
       </Router>,
     );
 

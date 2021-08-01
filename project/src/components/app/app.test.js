@@ -134,7 +134,6 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     expect(screen.getByText(`${FILM.name}`, 'i')).toBeInTheDocument();
-    // expect(screen.getByText(/Add review/i)).toBeInTheDocument();
   });
 
   it('should render "NotFound" when user navigate to "/404"', () => {

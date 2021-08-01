@@ -26,6 +26,5 @@ describe('Component: LoadMore', () => {
     );
 
     expect(screen.getByText(/Show more/i)).toBeInTheDocument();
-
   });
 });

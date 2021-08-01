@@ -6,7 +6,7 @@ import {createMemoryHistory} from 'history';
 import { Provider } from 'react-redux';
 import Player from './Player';
 
-const FILM = {
+const mockFilm = {
   id:1,
   name:'Pulp Fiction',
   posterImage:'https://7.react.pages.academy/static/film/poster/Pulp_Fiction.jpg',
@@ -33,7 +33,7 @@ describe('Component: Player', () => {
     const mockStore = configureStore({});
     const store = mockStore({
       FILM: {
-        activeFilm: FILM,
+        activeFilm: mockFilm,
         isDataActiveFilmLoaded: true,
       },
     });

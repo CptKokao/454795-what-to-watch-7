@@ -6,8 +6,6 @@ import {useHistory} from 'react-router-dom';
 
 import {loadActiveFilm} from '../../../store/actions/api-actions/api-actions';
 import {getActiveFilm, getIsDataActiveFilmLoaded} from '../../../store/reducer/film-data/selectors';
-
-import {AppRoute} from '../../../const';
 import FormReview from '../../../components/common/FormReview/FormReview';
 import Avatar from '../../common/Header/Avatar';
 import Logo from '../../common/Header/Logo';

@@ -28,4 +28,4 @@ describe('Component: Header', () => {
 
     expect(document.querySelector('.page-header')).toBeInTheDocument();
   });
-})
+});

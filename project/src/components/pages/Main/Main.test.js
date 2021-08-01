@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import Main from './Main';
 import { AuthorizationStatus } from './../../../const';
 
-const FILM = {
+const mockFilm = {
   id:1,
   name:'Pulp Fiction',
   posterImage:'https://7.react.pages.academy/static/film/poster/Pulp_Fiction.jpg',
@@ -27,8 +27,8 @@ const FILM = {
   isFavorite: false,
 };
 
-const FILMS = new Array(10).fill(null).map((_, i) => {
-  const film = Object.assign({}, FILM);
+const mockFilms = new Array(10).fill(null).map((_, i) => {
+  const film = Object.assign({}, mockFilm);
   film.id = i;
   return film;
 });
@@ -40,11 +40,11 @@ describe('Component: Main', () => {
     const mockStore = configureStore({});
     const store = mockStore({
       FILM: {
-        listFilms: FILMS,
-        activeFilm: FILM,
-        promoFilm: FILM,
-        listSimilarFilms: FILMS,
-        listFavoriteFilms: FILMS,
+        listFilms: mockFilms,
+        activeFilm: mockFilm,
+        promoFilm: mockFilm,
+        listSimilarFilms: mockFilms,
+        listFavoriteFilms: mockFilms,
         isDataFilmsLoaded: true,
         isDataActiveFilmLoaded: true,
         isDataSimilarFilmLoaded: true,

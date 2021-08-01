@@ -6,7 +6,7 @@ import {createMemoryHistory} from 'history';
 import { Provider } from 'react-redux';
 import ListCards from './ListCards';
 
-const FILM = {
+const mockFilm = {
   id:1,
   name:'Pulp Fiction',
   posterImage:'https://7.react.pages.academy/static/film/poster/Pulp_Fiction.jpg',
@@ -26,8 +26,8 @@ const FILM = {
   isFavorite: false,
 };
 
-const FILMS = new Array(10).fill(null).map((_, i) => {
-  const film = Object.assign({}, FILM);
+const mockFilms = new Array(10).fill(null).map((_, i) => {
+  const film = Object.assign({}, mockFilm);
   film.id = i;
 
   return film;
@@ -43,7 +43,7 @@ describe('Component: ListCards', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <ListCards listFilms={FILMS} />
+          <ListCards listFilms={mockFilms} />
         </Router>
       </Provider>,
     );

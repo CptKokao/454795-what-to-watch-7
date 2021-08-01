@@ -63,10 +63,13 @@ function Player({match}) {
     let minunes = null;
     let seconds = null;
 
-    if(time >= 3600) {
-      hours = parseInt(time / 3600, 10);
-      minunes = parseInt((time % 3600) / 60, 10);
-      seconds = parseInt(time % 60, 10);
+    const secondsInHour = 3600;
+    const secondsInMinute = 60;
+
+    if(time >= secondsInHour) {
+      hours = parseInt(time / secondsInHour, 10);
+      minunes = parseInt((time % secondsInHour) / secondsInMinute, 10);
+      seconds = parseInt(time % secondsInMinute, 10);
 
       if(!seconds) {
         seconds = '00';
@@ -77,8 +80,8 @@ function Player({match}) {
       );
     }
 
-    minunes = parseInt(time / 60, 10);
-    seconds = parseInt(time % 60, 10);
+    minunes = parseInt(time / secondsInMinute, 10);
+    seconds = parseInt(time % secondsInMinute, 10);
 
     if(!seconds) {
       seconds = '00';
