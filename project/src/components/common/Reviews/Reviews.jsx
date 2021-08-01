@@ -12,8 +12,10 @@ function Reviews({ id }) {
   const isDataReviewsLoaded = useSelector(getIsDataReviewsLoaded);
 
   React.useEffect(() => {
-    dispatch(loadListReviews(id));
-  }, [dispatch, id]);
+    if(!isDataReviewsLoaded) {
+      dispatch(loadListReviews(id));
+    }
+  }, [dispatch, id, isDataReviewsLoaded]);
 
   if (!isDataReviewsLoaded) {
     return <Loader/>;

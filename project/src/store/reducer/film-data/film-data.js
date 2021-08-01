@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {getListFilms, getPromoFilm, getActiveFilm, getSimilarFilms, getListFavotites} from '../../actions/api-actions/api-actions';
-import {changeGenre, changeLimit} from '../../actions/actions/actions';
+import {changeGenre, changeLimit, resetFilmLoad} from '../../actions/actions/actions';
 import {adapterToClient} from '../../../services/adapter';
 
 const initialState = {
@@ -53,6 +53,10 @@ const filmData = createReducer(initialState, (builder) => {
 
     .addCase(changeLimit, (state) => {
       state.limit = state.limit + 8;
+    })
+
+    .addCase(resetFilmLoad, (state) => {
+      state.isDataActiveFilmLoaded = false;
     });
 });
 

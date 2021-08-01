@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+
+import {resetFilmLoad} from '../../../store/actions/actions/actions';
 
 function Card({name, id, previewVideoLink, posterImage}) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   // Необходим очищение setTimeout
   const [delayHandler, setDelayHandler] =  React.useState(null);
 
@@ -20,6 +26,14 @@ function Card({name, id, previewVideoLink, posterImage}) {
     clearTimeout(delayHandler);
   }, [delayHandler]);
 
+  const handleClick = React.useCallback((e) => {
+    e.preventDefault();
+    player.current && player.current.load();
+    clearTimeout(delayHandler);
+    history.push(`/films/${id}`);
+    dispatch(resetFilmLoad());
+  }, [delayHandler, history, id, dispatch]);
+
   return (
     <article
       className="small-film-card catalog__films-card"
@@ -28,10 +42,20 @@ function Card({name, id, previewVideoLink, posterImage}) {
       data-id={id}
     >
       <div className="small-film-card__image">
-        <video src={previewVideoLink} className="player__video" poster={posterImage} ref={player} />
+        <video
+          src={previewVideoLink}
+          className="player__video"
+          poster={posterImage}
+          ref={player}
+        />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" onClick={handleMouseLeave} to={`/films/${id}`}>{name}</Link>
+        <Link
+          className="small-film-card__link"
+          onClick={handleClick}
+          to="#"
+        >{name}
+        </Link>
       </h3>
     </article>
   );

@@ -5,10 +5,9 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import { AuthorizationStatus } from '../../../const';
 import {loadActiveFilm, loadSimilarFilms} from '../../../store/actions/api-actions/api-actions';
-import {getActiveFilm, getIsDataActiveFilmLoaded, getListSimilarFilms} from '../../../store/reducer/film-data/selectors';
+import {getActiveFilm, getIsDataActiveFilmLoaded, getIsDataSimilarFilmLoaded, getListSimilarFilms} from '../../../store/reducer/film-data/selectors';
 import {getStatus} from '../../../store/reducer/user/selectors';
 
-import {AppRoute} from '../../../const';
 import ListCards from '../../common/ListCards/ListCards';
 import Tabs from '../../common/Tabs/Tabs';
 import Header from '../../common/Header/Header';
@@ -24,16 +23,20 @@ function Film({ match }) {
   const listSimilarFilms = useSelector(getListSimilarFilms);
   const statusAuth = useSelector(getStatus);
   const isDataActiveFilmLoaded = useSelector(getIsDataActiveFilmLoaded);
+  const isDataSimilarFilmLoaded = useSelector(getIsDataSimilarFilmLoaded);
   const id = +match.params.id;
 
   React.useEffect(() => {
-    dispatch(loadActiveFilm(id))
-      .catch(() => history.push(AppRoute.NOTFOUND));
+    if(!isDataActiveFilmLoaded) {
+      dispatch(loadActiveFilm(id));
+    }
 
-    dispatch(loadSimilarFilms(id));
-  }, [dispatch, history, id]);
+    if(!isDataSimilarFilmLoaded) {
+      dispatch(loadSimilarFilms(id));
+    }
+  }, [dispatch, history, id, isDataActiveFilmLoaded, isDataSimilarFilmLoaded]);
 
-  if (!isDataActiveFilmLoaded) {
+  if (!isDataActiveFilmLoaded && !isDataSimilarFilmLoaded) {
     return <Loader/>;
   }
 

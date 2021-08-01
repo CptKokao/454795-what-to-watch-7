@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import Details from './Details';
@@ -7,7 +7,7 @@ import Details from './Details';
 describe('Component: Details', () => {
   it('should render correctly', () => {
     const history = createMemoryHistory();
-    const {getByText} = render(
+    render(
       <Router history={history}>
         <Details
           director={'Quentin Tarantino'}
@@ -19,16 +19,10 @@ describe('Component: Details', () => {
       </Router>,
     );
 
-    const directorElement = getByText('Director');
-    const starringElement = getByText('Starring');
-    const runTimeElement = getByText('Run Time');
-    const genreElement = getByText('Genre');
-    const releasedElement = getByText('Released');
-
-    expect(directorElement).toBeInTheDocument();
-    expect(starringElement).toBeInTheDocument();
-    expect(runTimeElement).toBeInTheDocument();
-    expect(genreElement).toBeInTheDocument();
-    expect(releasedElement).toBeInTheDocument();
+    expect(screen.getByText(/Director/i)).toBeInTheDocument();
+    expect(screen.getByText(/Starring/i)).toBeInTheDocument();
+    expect(screen.getByText(/Run Time/i)).toBeInTheDocument();
+    expect(screen.getByText(/Genre/i)).toBeInTheDocument();
+    expect(screen.getByText(/Released/i)).toBeInTheDocument();
   });
 });

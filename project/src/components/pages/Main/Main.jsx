@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import {loadPromoFilm, loadListFilms} from '../../../store/actions/api-actions/api-actions';
-import {getListPromoFilm, getListFilms, getIsDataPromoFilmLoaded} from '../../../store/reducer/film-data/selectors';
+import {getListPromoFilm, getListFilms, getIsDataPromoFilmLoaded, getIsDataFilmsLoaded} from '../../../store/reducer/film-data/selectors';
 import ListGenres from '../../common/ListGenres/ListGenres';
 import Header from '../../common/Header/Header';
 import Footer from '../../common/Footer/Footer';
@@ -17,11 +17,14 @@ function Main() {
   const promoFilm = useSelector(getListPromoFilm);
   const isDataPromoFilmLoaded = useSelector(getIsDataPromoFilmLoaded);
   const listFilms = useSelector(getListFilms);
+  const isDataFilmsLoaded = useSelector(getIsDataFilmsLoaded);
 
   React.useEffect(() => {
-    dispatch(loadListFilms());
-    dispatch(loadPromoFilm());
-  }, [dispatch]);
+    if(!isDataFilmsLoaded || !isDataPromoFilmLoaded) {
+      dispatch(loadListFilms());
+      dispatch(loadPromoFilm());
+    }
+  }, [dispatch, isDataFilmsLoaded, isDataPromoFilmLoaded]);
 
   if (!isDataPromoFilmLoaded) {
     return <Loader/>;

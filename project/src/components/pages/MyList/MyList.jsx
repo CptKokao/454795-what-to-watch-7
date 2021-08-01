@@ -16,8 +16,10 @@ function MyList() {
   const isFavoriteFilmsLoaded = useSelector(getIsDataFavoriteFilmsLoaded);
 
   React.useEffect(() => {
-    dispatch(loadListFavotites());
-  }, [dispatch]);
+    if(!isFavoriteFilmsLoaded) {
+      dispatch(loadListFavotites());
+    }
+  }, [dispatch, isFavoriteFilmsLoaded]);
 
   if (!isFavoriteFilmsLoaded) {
     return <Loader/>;

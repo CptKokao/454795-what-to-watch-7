@@ -94,9 +94,11 @@ function Player({match}) {
   const id = +match.params.id;
 
   React.useEffect(() => {
-    dispatch(loadActiveFilm(id))
-      .catch(() => history.push(AppRoute.NOTFOUND));
-  }, [dispatch, history, id]);
+    if (!isDataActiveFilmLoaded) {
+      dispatch(loadActiveFilm(id))
+        .catch(() => history.push(AppRoute.NOTFOUND));
+    }
+  }, [dispatch, history, id, isDataActiveFilmLoaded]);
 
   if (!isDataActiveFilmLoaded) {
     return <Loader/>;

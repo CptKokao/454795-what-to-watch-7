@@ -7,6 +7,7 @@ export const ActionType = {
   LOAD_SIMILAR_FILMS: 'data/loadSimilarFilm',
   LOAD_REVIEWS: 'data/loadReviews',
   LOAD_FAVORITES: 'data/loadFavoriteFilm',
+  RESET_LOAD_FILM: 'card/resetLoadFilm',
 
   CHANGE_LIMIT: 'loadMore/changeLimit',
   CHANGE_GENRE: 'listGenres/changeGenre',
@@ -34,3 +35,5 @@ export const changeEmail = createAction(ActionType.CHANGE_EMAIL, (email) => ({
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
 }));
+
+export const resetFilmLoad = createAction(ActionType.RESET_LOAD_FILM);

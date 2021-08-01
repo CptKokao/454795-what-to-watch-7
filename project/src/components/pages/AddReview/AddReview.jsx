@@ -26,8 +26,7 @@ function AddReview({ match }) {
     // Если ранее фильм был загружен, то объект должен быть не пустой,
     // тогда запрос к сереверу отправлять не нужно, иначе запросить фильм
     if(Object.keys(activeFilm).length === 0) {
-      dispatch(loadActiveFilm(id))
-        .catch(() => history.push(AppRoute.NOTFOUND));
+      dispatch(loadActiveFilm(id));
     }
   }, [dispatch, activeFilm, history, id]);
 

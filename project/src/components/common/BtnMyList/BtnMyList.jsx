@@ -6,16 +6,21 @@ import { AppRoute, AuthorizationStatus } from '../../../const';
 
 import {addFavoriteFilm, deleteFavoriteFilm, loadListFavotites} from '../../../store/actions/api-actions/api-actions';
 import {getStatus} from '../../../store/reducer/user/selectors';
-import {getListFavoriteFilms} from '../../../store/reducer/film-data/selectors';
+import {getListFavoriteFilms, getIsDataFavoriteFilmsLoaded} from '../../../store/reducer/film-data/selectors';
 
 function BtnMyList({id}) {
   const dispatch = useDispatch();
+  const isDataFavoriteFilmsLoaded = useSelector(getIsDataFavoriteFilmsLoaded);
+  const listFavoriteFilms = useSelector(getListFavoriteFilms);
+  const statusAuth = useSelector(getStatus);
+  const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
 
   React.useEffect(() => {
-    dispatch(loadListFavotites());
-  }, [dispatch]);
+    if(!isDataFavoriteFilmsLoaded) {
+      dispatch(loadListFavotites());
+    }
+  }, [dispatch, isDataFavoriteFilmsLoaded]);
 
-  // Сейчас работает корректно
   async function addFavorite() {
     await dispatch(addFavoriteFilm(id));
     await dispatch(loadListFavotites());
@@ -25,12 +30,6 @@ function BtnMyList({id}) {
     await dispatch(deleteFavoriteFilm(id));
     await dispatch(loadListFavotites());
   }
-
-  const listFavoriteFilms = useSelector(getListFavoriteFilms);
-  const statusAuth = useSelector(getStatus);
-
-  const getFavoriteById = React.useCallback(() => listFavoriteFilms.find((item) => item.id === (+id)),[listFavoriteFilms, id]);
-
 
   if (statusAuth !== AuthorizationStatus.AUTH) {
     return (

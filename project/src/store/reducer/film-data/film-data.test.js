@@ -176,4 +176,15 @@ describe('Reducer: film', () => {
     expect(filmData(state, changeLimit))
       .toEqual({limit: 16});
   });
+
+  it('should update isDataActiveFilmLoaded', () => {
+    const state = {isDataActiveFilmLoaded: true};
+
+    const resetFilmLoad = {
+      type: ActionType.RESET_LOAD_FILM,
+    };
+
+    expect(filmData(state, resetFilmLoad))
+      .toEqual({isDataActiveFilmLoaded: false});
+  });
 });
