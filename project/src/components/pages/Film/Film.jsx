@@ -87,7 +87,7 @@ function Film({ match }) {
               <img src={activeFilm.posterImage} alt={activeFilm.name} width="218" height="327" />
             </div>
 
-            <Tabs id={id} activeFilm={activeFilm} />
+            {activeFilm && <Tabs id={id} activeFilm={activeFilm} /> }
           </div>
         </div>
       </section>
